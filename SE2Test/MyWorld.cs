@@ -18,10 +18,14 @@ namespace SE2Test
             e2.AddComponent(new TileMapComponent("tiled/map.tmx"));
             AddEntity(e2);
 
+            Entity e3 = new Entity();
+            e3.AddComponent(new TransformComponent(new Vec3(600, 450), new Vec3(0.5f)));
+            e3.AddComponent(new SpriteComponent("awesomeface"));
+            AddEntity(e3);
+
             e5 = new Entity();
             e5.AddComponent(new TransformComponent(new Vec3(600, 450), new Vec3(1)));
             e5.AddComponent(new SpriteSheetComponent("spritesheet", new Vec2(32), new Dictionary<string, List<int>>() { { "idle", new List<int>() { 13, 14, 15, 16, 17, 18, 19, 20 } } }, "idle", 150));
-            //e5.AddComponent(new SpriteComponent("awesomeface"));
             e5.AddComponent(new ControlComponent(ControlType.FOURDIRECTION));
             e5.AddComponent(new RectCollisionComponent(new Vec3(96, 96, 1), new Vec3(0), true));
             AddEntity(e5);
@@ -49,7 +53,7 @@ namespace SE2Test
         {
             base.Load();
 
-            GetWindow().GetCamera().follow = GetEntities()[0];
+            GetWindow().GetCamera().follow = e5;
         }
     }
 }
