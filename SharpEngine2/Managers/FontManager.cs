@@ -43,8 +43,6 @@ namespace SE2.Managers
         {
             if (fonts.ContainsKey(name))
                 return fonts[name];
-            else
-                Trace.WriteLine($"[WARNING] A font with this name doesn't exists : {name}");
             return null;
         }
         internal void Unload()

@@ -30,7 +30,7 @@ namespace SE2.Components
         {
             base.Render();
 
-            if (!displayed)
+            if (!displayed || GetWindow().shaderManager.GetShader(shaderName) == null || GetWindow().textureManager.GetTexture(texture) == null)
                 return;
 
             foreach (Entities.Entity e in entities)

@@ -61,8 +61,6 @@ namespace SE2.Managers
                 soundsBytes[name].Play();
             else if (soundsFloat.ContainsKey(name))
                 soundsFloat[name].Play();
-            else
-                Trace.WriteLine($"[WARNING] A sound with this name doesn't exists : {name}");
         }
 
         public void StopSound(string name)
@@ -71,8 +69,6 @@ namespace SE2.Managers
                 soundsBytes[name].Stop();
             else if (soundsFloat.ContainsKey(name))
                 soundsFloat[name].Stop();
-            else
-                Trace.WriteLine($"[WARNING] A sound with this name doesn't exists : {name}");
         }
 
         internal void Unload()

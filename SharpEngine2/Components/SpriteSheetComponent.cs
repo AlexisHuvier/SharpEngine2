@@ -74,7 +74,7 @@ namespace SE2.Components
         {
             base.Render();
 
-            if (!displayed || texture.Length == 0 || currentAnim.Length == 0 || spriteSize == new Utils.Vec2(0) || !animations.ContainsKey(currentAnim))
+            if (!displayed || texture.Length == 0 || currentAnim.Length == 0 || spriteSize == new Utils.Vec2(0) || !animations.ContainsKey(currentAnim) || GetWindow().shaderManager.GetShader(shaderName) == null || GetWindow().textureManager.GetTexture(texture) == null)
                 return;
 
 

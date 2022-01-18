@@ -24,7 +24,7 @@ namespace SE2.Widgets
         {
             base.Render();
 
-            if (!displayed)
+            if (!displayed || GetWindow().shaderManager.GetShader(shaderName) == null || GetWindow().fontManager.GetFont(font) == null)
                 return;
 
             Matrix4 model = Matrix4.Identity

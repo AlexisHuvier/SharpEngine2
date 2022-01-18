@@ -40,8 +40,6 @@ namespace SE2.Managers
         {
             if (shaders.ContainsKey(name))
                 return shaders[name];
-            else
-                Trace.WriteLine($"[WARNING] A shader with this name doesn't exists : {name}");
             return null;
         }
 

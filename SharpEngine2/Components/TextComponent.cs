@@ -28,7 +28,7 @@ namespace SE2.Components
         {
             base.Render();
 
-            if (!displayed)
+            if (!displayed || GetWindow().shaderManager.GetShader(shaderName) == null || GetWindow().fontManager.GetFont(font) == null)
                 return;
 
             foreach (Entities.Entity e in entities)

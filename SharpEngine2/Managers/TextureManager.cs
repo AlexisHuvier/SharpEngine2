@@ -40,8 +40,6 @@ namespace SE2.Managers
         {
             if (textures.ContainsKey(name))
                 return textures[name];
-            else
-                Trace.WriteLine($"[WARNING] A texture with this name doesn't exists : {name}");
             return null;
         }
 
