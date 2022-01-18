@@ -6,6 +6,7 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 using System.Diagnostics;
 using OpenTK.Mathematics;
 using System.Collections.Generic;
+using SE2.Graphics;
 
 namespace SE2.Utils
 {

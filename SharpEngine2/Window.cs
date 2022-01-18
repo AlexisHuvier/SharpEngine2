@@ -5,6 +5,7 @@ using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using OpenTK.Audio.OpenAL;
 using SE2.Utils;
+using SE2.Graphics;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System;

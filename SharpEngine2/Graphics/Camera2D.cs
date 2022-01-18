@@ -1,6 +1,6 @@
 ﻿using OpenTK.Mathematics;
 
-namespace SE2.Utils
+namespace SE2.Graphics
 {
     public class Camera2D
     {

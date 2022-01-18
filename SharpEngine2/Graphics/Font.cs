@@ -3,15 +3,15 @@ using OpenTK.Graphics.OpenGL4;
 using SharpFont;
 using System.Diagnostics;
 
-namespace SE2.Utils
+namespace SE2.Graphics
 {
     public class Font
     {
         internal struct Character
         {
             public int TextureID;  // ID handle of the glyph texture
-            public Vec2 Size;       // Size of glyph
-            public Vec2 Bearing;    // Offset from baseline to left/top of glyph
+            public Utils.Vec2 Size;       // Size of glyph
+            public Utils.Vec2 Bearing;    // Offset from baseline to left/top of glyph
             public int Advance;    // Offset to advance to next glyph
         };
 
@@ -47,8 +47,8 @@ namespace SE2.Utils
 
                 Character character = new Character() {
                     TextureID = texture,
-                    Size = new Vec2(face.Glyph.Bitmap.Width, face.Glyph.Bitmap.Rows),
-                    Bearing = new Vec2(face.Glyph.BitmapLeft, face.Glyph.BitmapTop),
+                    Size = new Utils.Vec2(face.Glyph.Bitmap.Width, face.Glyph.Bitmap.Rows),
+                    Bearing = new Utils.Vec2(face.Glyph.BitmapLeft, face.Glyph.BitmapTop),
                     Advance = (int)face.Glyph.Advance.X
                 };
                 Characters.Add(System.Convert.ToChar(cbis), character);

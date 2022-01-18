@@ -8,11 +8,11 @@ namespace SE2.Managers
     {
         internal static Library lib = new Library();
 
-        private Dictionary<string, Utils.Font> fonts;
+        private Dictionary<string, Graphics.Font> fonts;
 
         public FontManager()
         {
-            fonts = new Dictionary<string, Utils.Font>();
+            fonts = new Dictionary<string, Graphics.Font>();
             Trace.WriteLineIf(Window.DEBUG, "[DEBUG] FontManager Initialized");
         }
 
@@ -22,7 +22,7 @@ namespace SE2.Managers
                 Trace.WriteLine($"[WARNING] A font with this name already exists : {name}");
             else
             {
-                fonts.Add(name, new Utils.Font(file, size));
+                fonts.Add(name, new Graphics.Font(file, size));
                 Trace.WriteLineIf(Window.DEBUG, $"[DEBUG] Font added : {name}");
             }
         }
@@ -39,7 +39,7 @@ namespace SE2.Managers
                 Trace.WriteLine($"[WARNING] A font with this name doesn't exists : {name}");
         }
 
-        internal Utils.Font GetFont(string name)
+        internal Graphics.Font GetFont(string name)
         {
             if (fonts.ContainsKey(name))
                 return fonts[name];
@@ -49,7 +49,7 @@ namespace SE2.Managers
         }
         internal void Unload()
         {
-            foreach (KeyValuePair<string, Utils.Font> font in fonts)
+            foreach (KeyValuePair<string, Graphics.Font> font in fonts)
                 font.Value.Unload();
         }
     }

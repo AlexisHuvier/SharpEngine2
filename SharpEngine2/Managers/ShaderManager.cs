@@ -5,15 +5,15 @@ namespace SE2.Managers
 {
     public class ShaderManager
     {
-        private Dictionary<string, Utils.Shader> shaders;
+        private Dictionary<string, Graphics.Shader> shaders;
 
         public ShaderManager()
         {
-            shaders = new Dictionary<string, Utils.Shader>();
+            shaders = new Dictionary<string, Graphics.Shader>();
             Trace.WriteLineIf(Window.DEBUG, "[DEBUG] ShaderManager Initialized");
         }
 
-        public void AddShader(string name, Utils.Shader shader)
+        public void AddShader(string name, Graphics.Shader shader)
         {
             if (shaders.ContainsKey(name))
                 Trace.WriteLine($"[WARNING] A shader with this name already exists : {name}");
@@ -36,7 +36,7 @@ namespace SE2.Managers
                 Trace.WriteLine($"[WARNING] A shader with this name doesn't exists : {name}");
         }
 
-        internal Utils.Shader GetShader(string name)
+        internal Graphics.Shader GetShader(string name)
         {
             if (shaders.ContainsKey(name))
                 return shaders[name];
@@ -47,7 +47,7 @@ namespace SE2.Managers
 
         internal void Unload()
         {
-            foreach (KeyValuePair<string, Utils.Shader> shader in shaders)
+            foreach (KeyValuePair<string, Graphics.Shader> shader in shaders)
                 shader.Value.Unload();
         }
     }

@@ -4,7 +4,7 @@ using System.Diagnostics;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 
-namespace SE2.Utils
+namespace SE2.Graphics
 {
     public class Shader
     {

@@ -65,11 +65,11 @@ namespace SE2.Widgets
                 GL.ActiveTexture(TextureUnit.Texture0);
                 GL.BindVertexArray(_vertexArrayObject);
 
-                List<Utils.Font.Character> characters = GetWindow().fontManager.GetFont(font).GetCharacters(text);
+                List<Graphics.Font.Character> characters = GetWindow().fontManager.GetFont(font).GetCharacters(text);
 
                 Utils.Vec3 size = new Utils.Vec3(0);
 
-                foreach (Utils.Font.Character ch in characters)
+                foreach (Graphics.Font.Character ch in characters)
                 {
                     size.x += ch.Size.x * scale.x;
                     size.y = ch.Size.y * scale.y;
@@ -78,7 +78,7 @@ namespace SE2.Widgets
 
                 float x = 0;
 
-                foreach (Utils.Font.Character ch in characters)
+                foreach (Graphics.Font.Character ch in characters)
                 {
                     float xp = ch.Bearing.x * scale.x + x - size.x / 2;
                     float yp = -(ch.Size.y - ch.Bearing.y) * scale.y - size.y / 2;

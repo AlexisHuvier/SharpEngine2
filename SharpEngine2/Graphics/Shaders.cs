@@ -1,4 +1,4 @@
-﻿namespace SE2.Utils
+﻿namespace SE2.Graphics
 {
     class Shaders
     {

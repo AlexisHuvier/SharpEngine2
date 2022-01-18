@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using PixelFormat = OpenTK.Graphics.OpenGL4.PixelFormat;
 
-namespace SE2.Utils
+namespace SE2.Graphics
 { 
     public enum TextureFilter
     {

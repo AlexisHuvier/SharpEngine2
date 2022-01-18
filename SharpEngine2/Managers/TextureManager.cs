@@ -5,21 +5,21 @@ namespace SE2.Managers
 {
     public class TextureManager
     {
-        private Dictionary<string, Utils.Texture> textures;
+        private Dictionary<string, Graphics.Texture> textures;
 
         public TextureManager()
         {
-            textures = new Dictionary<string, Utils.Texture>();
+            textures = new Dictionary<string, Graphics.Texture>();
             Trace.WriteLineIf(Window.DEBUG, "[DEBUG] TextureManager Initialized");
         }
 
-        public void AddTexture(string name, string file, Utils.TextureFilter minFilter = Utils.TextureFilter.Linear, Utils.TextureFilter magFilter = Utils.TextureFilter.Linear)
+        public void AddTexture(string name, string file, Graphics.TextureFilter minFilter = Graphics.TextureFilter.Linear, Graphics.TextureFilter magFilter = Graphics.TextureFilter.Linear)
         {
             if (textures.ContainsKey(name))
                 Trace.WriteLine($"[WARNING] A texture with this name already exists : {name}");
             else
             {
-                textures.Add(name, Utils.Texture.LoadFromFile(file, minFilter, magFilter));
+                textures.Add(name, Graphics.Texture.LoadFromFile(file, minFilter, magFilter));
                 Trace.WriteLineIf(Window.DEBUG, $"[DEBUG] Texture added : {name}");
             }
         }
@@ -36,7 +36,7 @@ namespace SE2.Managers
                 Trace.WriteLine($"[WARNING] A texture with this name doesn't exists : {name}");
         }
 
-        internal Utils.Texture GetTexture(string name)
+        internal Graphics.Texture GetTexture(string name)
         {
             if (textures.ContainsKey(name))
                 return textures[name];
@@ -44,9 +44,10 @@ namespace SE2.Managers
                 Trace.WriteLine($"[WARNING] A texture with this name doesn't exists : {name}");
             return null;
         }
+
         internal void Unload()
         {
-            foreach (KeyValuePair<string, Utils.Texture> texture in textures)
+            foreach (KeyValuePair<string, Graphics.Texture> texture in textures)
                 texture.Value.Unload();
         }
     }
