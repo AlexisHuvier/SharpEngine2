@@ -103,7 +103,7 @@ namespace SE2
             shaderManager.AddShader("text", new Shader(Shaders.GetBasicFontShaderVertex(), Shaders.GetBasicFontShaderFragment()));
         }
 
-        public Window(int width, int height, string title, bool debug = false): this(width, height, title, Color.DARK_GRAY, debug) { }
+        public Window(int width, int height, string title, bool debug = false, bool vsync = true): this(width, height, title, Color.DARK_GRAY, debug, vsync) { }
 
         public virtual Camera2D GetCamera() => camera;
         public virtual void SetCurrentScene(Scene scene) => currentScene = scenes.IndexOf(scene);
@@ -125,9 +125,6 @@ namespace SE2
         protected override void OnLoad()
         {
             base.OnLoad();
-
-            float[] color = backgroundColor.Normalized();
-            GL.ClearColor(color[0], color[1], color[2], color[3]);
 
             if (DEBUG)
             {
@@ -164,6 +161,9 @@ namespace SE2
         {
             base.OnRenderFrame(args);
 
+            float[] color = backgroundColor.Normalized();
+            GL.ClearColor(color[0], color[1], color[2], color[3]);
+
             DebugInfo.Draw();
 
             imguiController.Update(this, (float)args.Time);
@@ -184,7 +184,7 @@ namespace SE2
 
         public virtual void RenderImGui()
         {
-            ImGuiWindow.Render();
+            ImGuiWindow.Render(this);
         }
 
         protected override void OnTextInput(TextInputEventArgs e)

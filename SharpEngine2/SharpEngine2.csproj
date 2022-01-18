@@ -34,8 +34,4 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Graphics\Renderers\" />
-  </ItemGroup>
 </Project>
