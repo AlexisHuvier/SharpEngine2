@@ -70,20 +70,19 @@ namespace SE2.Components
                     GL.ActiveTexture(TextureUnit.Texture0);
                     GL.BindVertexArray(_vertexArrayObject);
 
-                    List<Utils.Font.Character> characters = GetWindow().fontManager.GetFont(font).GetCharacters(text);
+                    List<Graphics.Font.Character> characters = GetWindow().fontManager.GetFont(font).GetCharacters(text);
 
                     Utils.Vec3 size = new Utils.Vec3(0);
 
-                    foreach (Utils.Font.Character ch in characters)
+                    foreach (Graphics.Font.Character ch in characters)
                     {
                         size.x += ch.Size.x * tc.scale.x;
                         size.y = ch.Size.y * tc.scale.y;
                     }
 
+                    float x = 0;
 
-                        float x = 0;
-
-                    foreach (Utils.Font.Character ch in characters)
+                    foreach (Graphics.Font.Character ch in characters)
                     {
                         float xp = ch.Bearing.x * tc.scale.x + x - size.x / 2;
                         float yp = - (ch.Size.y - ch.Bearing.y) * tc.scale.y - size.y / 2;

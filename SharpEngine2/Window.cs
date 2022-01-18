@@ -237,6 +237,8 @@ namespace SE2
             foreach (Scene w in scenes)
                 w.Unload();
 
+            Graphics.Renderers.SpriteRenderer.Unload();
+            Graphics.Renderers.SpriteSheetRenderer.Unload();
             fontManager.Unload();
             shaderManager.Unload();
             soundManager.Unload();
