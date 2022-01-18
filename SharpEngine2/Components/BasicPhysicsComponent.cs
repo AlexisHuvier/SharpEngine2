@@ -9,7 +9,7 @@
         private int time;
         public int gravity;
 
-        public BasicPhysicsComponent(int gravity = 5, int groundedGravity = 2, int timeGravity = 100) : base()
+        public BasicPhysicsComponent(int gravity = 100, int groundedGravity = 40, int timeGravity = 50) : base()
         {
             maxGravity = gravity;
             this.groundedGravity = groundedGravity;
@@ -28,7 +28,7 @@
                 if (e.GetComponent<TransformComponent>() is TransformComponent tc)
                 {
                     Utils.Vec3 pos = new Utils.Vec3(tc.position.x, tc.position.y, tc.position.z);
-                    pos.y -= gravity;
+                    pos.y -= gravity * (float)deltaTime;
 
                     if(e.HasComponent<SphereCollisionComponent>() || e.HasComponent<RectCollisionComponent>())
                     {

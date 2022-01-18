@@ -10,7 +10,7 @@ namespace SE2.Components
         private Dictionary<Utils.ControlKey, Utils.Inputs.Key> keys;
         public bool isMoving;
 
-        public ControlComponent(Utils.ControlType type = Utils.ControlType.FOURDIRECTION, int spd = 5, int jmpForce = 5)
+        public ControlComponent(Utils.ControlType type = Utils.ControlType.FOURDIRECTION, int spd = 100, int jmpForce = 100)
         {
             controlType = type;
             speed = spd;
@@ -47,42 +47,42 @@ namespace SE2.Components
                         case Utils.ControlType.MOUSEFOLLOW:
                             var mp = Managers.InputManager.GetMousePosition();
                             if (pos.x < mp.x - speed / 2)
-                                pos.x += speed;
+                                pos.x += speed * (float)deltaTime;
                             else if (pos.x > mp.x + speed / 2)
-                                pos.x -= speed;
+                                pos.x -= speed * (float)deltaTime;
 
                             if (pos.y < (GetWindow().ClientSize.Y - mp.y) - speed / 2)
-                                pos.y += speed;
+                                pos.y += speed * (float)deltaTime;
                             else if (pos.y > (GetWindow().ClientSize.Y - mp.y) + speed / 2)
-                                pos.y -= speed;
+                                pos.y -= speed * (float)deltaTime;
                             break;
                         case Utils.ControlType.LEFTRIGHT:
                             if (Managers.InputManager.IsKeyDown(keys[Utils.ControlKey.LEFT]))
-                                pos.x -= speed;
+                                pos.x -= speed * (float)deltaTime;
                             if (Managers.InputManager.IsKeyDown(keys[Utils.ControlKey.RIGHT]))
-                                pos.x += speed;
+                                pos.x += speed * (float)deltaTime;
                             break;
                         case Utils.ControlType.UPDOWN:
                             if (Managers.InputManager.IsKeyDown(keys[Utils.ControlKey.UP]))
-                                pos.y += speed;
+                                pos.y += speed * (float)deltaTime;
                             if (Managers.InputManager.IsKeyDown(keys[Utils.ControlKey.DOWN]))
-                                pos.y -= speed;
+                                pos.y -= speed * (float)deltaTime;
                             break;
                         case Utils.ControlType.FOURDIRECTION:
                             if (Managers.InputManager.IsKeyDown(keys[Utils.ControlKey.LEFT]))
-                                pos.x -= speed;
+                                pos.x -= speed * (float)deltaTime;
                             if (Managers.InputManager.IsKeyDown(keys[Utils.ControlKey.RIGHT]))
-                                pos.x += speed;
+                                pos.x += speed * (float)deltaTime;
                             if (Managers.InputManager.IsKeyDown(keys[Utils.ControlKey.UP]))
-                                pos.y += speed;
+                                pos.y += speed * (float)deltaTime;
                             if (Managers.InputManager.IsKeyDown(keys[Utils.ControlKey.DOWN]))
-                                pos.y -= speed;
+                                pos.y -= speed * (float)deltaTime;
                             break;
                         case Utils.ControlType.CLASSICJUMP:
                             if (Managers.InputManager.IsKeyDown(keys[Utils.ControlKey.LEFT]))
-                                pos.x -= speed;
+                                pos.x -= speed * (float)deltaTime;
                             if (Managers.InputManager.IsKeyDown(keys[Utils.ControlKey.RIGHT]))
-                                pos.x += speed;
+                                pos.x += speed * (float)deltaTime;
                             if (Managers.InputManager.IsKeyPressed(keys[Utils.ControlKey.UP]))
                             {
                                 if (e.GetComponent<BasicPhysicsComponent>() is BasicPhysicsComponent pc && pc.grounded)
