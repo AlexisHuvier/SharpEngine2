@@ -6,7 +6,7 @@ namespace SE2.Entities
 {
     public class Entity
     {
-        private List<Components.Component> components;
+        internal List<Components.Component> components;
         internal Scene scene;
 
         public Entity()

@@ -19,7 +19,7 @@ namespace SE2.Components
         public bool flipY;
 
         private int currentImage;
-        private string currentAnim;
+        internal string currentAnim;
         private float internalTimer;
 
         public SpriteSheetComponent(string texture, Utils.Vec2 size, Dictionary<string, List<int>> animations, string currentAnim = "", int timerFrameMS = 250, string shaderName = "sprite", bool displayed = true) : base()

@@ -4,10 +4,10 @@ namespace SE2.Utils
 {
     public class Color
     {
-        private int internalR;
-        private int internalG;
-        private int internalB;
-        private int internalA;
+        internal int internalR;
+        internal int internalG;
+        internal int internalB;
+        internal int internalA;
 
         public int r
         {
