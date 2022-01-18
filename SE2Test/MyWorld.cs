@@ -26,6 +26,11 @@ namespace SE2Test
             e5.AddComponent(new RectCollisionComponent(new Vec3(96, 96, 1), new Vec3(0), true));
             AddEntity(e5);
 
+            Entity e4 = new Entity();
+            e4.AddComponent(new TransformComponent(new Vec3(600, 450)));
+            e4.AddComponent(new TextComponent("SALUT !", "basic"));
+            AddEntity(e4);
+
             AddWidget(new Image(new Vec3(100, 100), new Vec3(1), "awesomeface"));
             AddWidget(new Label(new Vec3(100, 100), new Vec3(1), "Heyo !", "basic"));
         }

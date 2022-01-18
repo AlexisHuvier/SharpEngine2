@@ -150,6 +150,7 @@ namespace SE2
             GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
             imguiController = new ImGuiController(ClientSize.X, ClientSize.Y);
+            Graphics.Renderers.TextRenderer.Load();
             Trace.WriteLineIf(DEBUG, $"[DEBUG] Window loaded");
 
             foreach (Scene w in scenes)
@@ -239,6 +240,7 @@ namespace SE2
 
             Graphics.Renderers.SpriteRenderer.Unload();
             Graphics.Renderers.SpriteSheetRenderer.Unload();
+            Graphics.Renderers.TextRenderer.Unload();
             fontManager.Unload();
             shaderManager.Unload();
             soundManager.Unload();
