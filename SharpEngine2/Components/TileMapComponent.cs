@@ -18,7 +18,7 @@ namespace SE2.Components
         protected Utils.Vec2 size;
         protected Utils.Vec2 tileSize;
         protected bool infinite;
-        protected List<Utils.Tile> tiles;
+        protected List<Graphics.Tile> tiles;
         protected List<Layer> layers;
         protected List<string> textures;
         public bool displayed;
@@ -27,7 +27,7 @@ namespace SE2.Components
         {
             this.displayed = displayed;
 
-            tiles = new List<Utils.Tile>();
+            tiles = new List<Graphics.Tile>();
             layers = new List<Layer>();
             textures = new List<string>();
 
@@ -56,13 +56,12 @@ namespace SE2.Components
 
             foreach(XElement tiletype in file.Element("tileset").Elements("tile"))
             {
-                Utils.Tile tile = new Utils.Tile(
+                textures.Add(Path.GetDirectoryName(tilemap) + Path.DirectorySeparatorChar + tiletype.Element("image").Attribute("source").Value);
+                tiles.Add(new Graphics.Tile(
                     Convert.ToInt32(tiletype.Attribute("id").Value) + 1,
                     Path.GetFileNameWithoutExtension(Path.GetDirectoryName(tilemap) + Path.DirectorySeparatorChar + tiletype.Element("image").Attribute("source").Value),
                     shadername
-                );
-                textures.Add(Path.GetDirectoryName(tilemap) + Path.DirectorySeparatorChar + tiletype.Element("image").Attribute("source").Value);
-                tiles.Add(tile);
+                ));
             }
 
             foreach(XElement element in file.Elements("layer"))
@@ -79,9 +78,9 @@ namespace SE2.Components
             layers.Reverse();
         }
 
-        public Utils.Tile GetTile(int id)
+        public Graphics.Tile GetTile(int id)
         {
-            foreach(Utils.Tile tile in tiles)
+            foreach(Graphics.Tile tile in tiles)
             {
                 if (tile.id == id)
                     return tile;
@@ -89,23 +88,15 @@ namespace SE2.Components
             return null;
         }
 
-        public override void Update(double deltaTime)
-        {
-            base.Update(deltaTime);
-
-            for(int i = textures.Count - 1; i > -1; i--)
-            {
-                GetWindow().textureManager.AddTexture(Path.GetFileNameWithoutExtension(textures[i]), textures[i]);
-                textures.RemoveAt(i);
-            }
-        }
-
         public override void Load()
         {
             base.Load();
 
-            foreach (Utils.Tile tile in tiles)
-                tile.Init(GetWindow());
+            foreach(string texture in textures)
+                GetWindow().textureManager.AddTexture(Path.GetFileNameWithoutExtension(texture), texture);
+
+            foreach (Graphics.Tile tile in tiles)
+                tile.Load(GetWindow());
         }
 
         public override void Render()

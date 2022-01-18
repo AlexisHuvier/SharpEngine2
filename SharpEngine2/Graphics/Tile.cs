@@ -1,7 +1,7 @@
-﻿using OpenTK.Graphics.OpenGL4;
-using OpenTK.Mathematics;
+﻿using OpenTK.Mathematics;
+using OpenTK.Graphics.OpenGL4;
 
-namespace SE2.Utils
+namespace SE2.Graphics
 {
     public class Tile
     {
@@ -34,7 +34,7 @@ namespace SE2.Utils
             this.shaderName = shaderName;
         }
 
-        public void Init(Window win)
+        public void Load(Window win)
         {
             _vertexArrayObject = GL.GenVertexArray();
             GL.BindVertexArray(_vertexArrayObject);
@@ -57,10 +57,12 @@ namespace SE2.Utils
             GL.EnableVertexAttribArray(texCoordLocation);
             GL.VertexAttribPointer(texCoordLocation, 2, VertexAttribPointerType.Float, false, 5 * sizeof(float), 3 * sizeof(float));
 
+            win.textureManager.GetTexture(source).Use(TextureUnit.Texture0);
+
             win.shaderManager.GetShader(shaderName).SetInt("texture0", 0);
         }
 
-        public void Render(Window win, Components.TransformComponent tc, Vec2 offset)
+        public void Render(Window win, Components.TransformComponent tc, Utils.Vec2 offset)
         {
             GL.BindVertexArray(_vertexArrayObject);
 
