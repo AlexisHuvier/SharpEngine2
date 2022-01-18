@@ -68,25 +68,29 @@ namespace SE2.Graphics
         public void SetInt(string name, int data)
         {
             GL.UseProgram(Handle);
-            GL.Uniform1(_uniformLocation[name], data);
+            if(_uniformLocation.ContainsKey(name))
+                GL.Uniform1(_uniformLocation[name], data);
         }
 
         public void SetFloat(string name, float data)
         {
             GL.UseProgram(Handle);
-            GL.Uniform1(_uniformLocation[name], data);
+            if (_uniformLocation.ContainsKey(name))
+                GL.Uniform1(_uniformLocation[name], data);
         }
 
         public void SetMatrix4(string name, Matrix4 data)
         {
             GL.UseProgram(Handle);
-            GL.UniformMatrix4(_uniformLocation[name], true, ref data);
+            if (_uniformLocation.ContainsKey(name))
+                GL.UniformMatrix4(_uniformLocation[name], true, ref data);
         }
 
         public void SetVector3(string name, Vector3 data)
         {
             GL.UseProgram(Handle);
-            GL.Uniform3(_uniformLocation[name], data);
+            if (_uniformLocation.ContainsKey(name))
+                GL.Uniform3(_uniformLocation[name], data);
         }
 
         // Uniform setters - END
