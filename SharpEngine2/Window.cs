@@ -29,13 +29,16 @@ namespace SE2
         public Managers.SoundManager soundManager;
         public Managers.TextureManager textureManager;
 
-        public Window(int width, int height, string title, Color bgColor, bool debug = false): base(GameWindowSettings.Default, new NativeWindowSettings()
+        public Window(int width, int height, string title, Color bgColor, bool debug = false, bool vsync = true): base(GameWindowSettings.Default, new NativeWindowSettings()
             {
                 Size = new Vector2i(width, height),
                 Title = title,
                 Flags = ContextFlags.ForwardCompatible
             })
         {
+            if (!vsync)
+                VSync = VSyncMode.Off;
+
             DEBUG = debug;
 
             if (DEBUG)
