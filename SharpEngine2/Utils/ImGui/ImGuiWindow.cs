@@ -21,6 +21,7 @@ namespace SE2.Utils
         private static string _newComponent = "";
 
         private static int _currentSelectedWidget = 0;
+        private static string _newWidget = "";
 
         private static void SetupVariables(Window win)
         {
@@ -274,8 +275,8 @@ namespace SE2.Utils
                     }
                 }
 
-                ImGui.InputText("Nouveau Composant", ref _newComponent, 40);
-                if (ImGui.Button("Ajouter"))
+                ImGui.InputText("New Component", ref _newComponent, 40);
+                if (ImGui.Button("Add"))
                 {
                     if(_newComponent == "BasicPhysicsComponent")
                         win.scenes[win.currentScene].entities[_currentSelectedEntity].AddComponent(new BasicPhysicsComponent());
@@ -306,6 +307,70 @@ namespace SE2.Utils
         internal static void RenderWidgetsInfo(Window win)
         {
             ImGui.Begin("Widget", ref _showWidget);
+            ImGui.ListBox("",
+                ref _currentSelectedWidget,
+                win.scenes[win.currentScene].widgets.Select(x => $"{x.GetType()} (ID : {x.id})").ToArray(),
+                win.scenes[win.currentScene].widgets.Count);
+            ImGui.Separator();
+
+            ImGui.InputText("New Widget", ref _newWidget, 40);
+            if (ImGui.Button("Add"))
+            {
+                if (_newWidget == "Image")
+                    win.scenes[win.currentScene].AddWidget(new Widgets.Image(new Vec3(0), new Vec3(1), ""));
+                else if (_newWidget == "Label")
+                    win.scenes[win.currentScene].AddWidget(new Widgets.Label(new Vec3(0), new Vec3(1), "", ""));
+                else
+                    Trace.WriteLineIf(Window.DEBUG, $"[DEBUG] ImGui : Unknown Widget {_newWidget}");
+            }
+
+            ImGui.BeginDisabled(win.scenes[win.currentScene].widgets.Count == 0);
+            if (ImGui.Button("Remove Widget"))
+                win.scenes[win.currentScene].RemoveWidget(win.scenes[win.currentScene].widgets[_currentSelectedEntity]);
+            ImGui.EndDisabled();
+
+            ImGui.Separator();
+
+            if (win.scenes[win.currentScene].widgets.Count > 0 && _currentSelectedWidget < win.scenes[win.currentScene].widgets.Count)
+            {
+                Widgets.Widget w = win.scenes[win.currentScene].widgets[_currentSelectedWidget];
+
+                ImGui.DragFloat("Position X", ref w.position.x);
+                ImGui.DragFloat("Position Y", ref w.position.y);
+                ImGui.DragFloat("Position Z", ref w.position.z);
+                ImGui.Separator();
+                ImGui.DragFloat("Scale X", ref w.scale.x, 0.05f);
+                ImGui.DragFloat("Scale Y", ref w.scale.y, 0.05f);
+                ImGui.DragFloat("Scale Z", ref w.scale.z, 0.05f);
+                ImGui.Separator();
+                ImGui.DragInt("Rotation", ref w.rotation);
+                ImGui.Checkbox("Displayed", ref w.displayed);
+                ImGui.Checkbox("Active", ref w.active);
+                ImGui.Separator();
+
+                if (w.GetType() == typeof(Widgets.Image))
+                {
+                    ImGui.InputText("Texture", ref ((Widgets.Image)w).texture, 40);
+                    ImGui.InputText("Shader Name", ref ((Widgets.Image)w).shaderName, 40);
+                    ImGui.Checkbox("Flip X", ref ((Widgets.Image)w).flipX);
+                    ImGui.Checkbox("Flip Y", ref ((Widgets.Image)w).flipY);
+
+                }
+                else if(w.GetType() == typeof(Widgets.Label))
+                {
+                    ImGui.InputText("Text", ref ((Widgets.Label)w).text, 40);
+                    ImGui.InputText("Shader Name", ref ((Widgets.Label)w).shaderName, 40);
+                    ImGui.InputText("Font", ref ((Widgets.Label)w).font, 40);
+                    ImGui.Separator();
+                    ImGui.DragInt("Color Red", ref ((Widgets.Label)w).color.internalR, 1f, 0, 255);
+                    ImGui.DragInt("Color Green", ref ((Widgets.Label)w).color.internalG, 1f, 0, 255);
+                    ImGui.DragInt("Color Blue", ref ((Widgets.Label)w).color.internalB, 1f, 0, 255);
+                    ImGui.DragInt("Color Alpha", ref ((Widgets.Label)w).color.internalA, 1f, 0, 255);
+                }
+
+                ImGui.Separator();
+            }
+
             ImGui.End();
         }
     }
