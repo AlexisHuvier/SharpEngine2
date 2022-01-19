@@ -11,6 +11,8 @@ namespace SE2.Graphics.Renderers
 
         public static void Load()
         {
+            Unload();
+
             _vertexArrayObject = GL.GenVertexArray();
             _vertexBufferObject = GL.GenBuffer();
 
