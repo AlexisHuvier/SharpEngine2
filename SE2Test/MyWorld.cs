@@ -24,11 +24,16 @@ namespace SE2Test
             AddEntity(e3);
 
             e5 = new Entity();
-            e5.AddComponent(new TransformComponent(new Vec3(600, 450), new Vec3(1)));
+            e5.AddComponent(new TransformComponent(new Vec3(600, 450), new Vec3(3)));
             e5.AddComponent(new SpriteSheetComponent("spritesheet", new Vec2(32), new Dictionary<string, List<int>>() { { "idle", new List<int>() { 13, 14, 15, 16, 17, 18, 19, 20 } } }, "idle", 150));
             e5.AddComponent(new ControlComponent(ControlType.FOURDIRECTION));
             e5.AddComponent(new RectCollisionComponent(new Vec3(96, 96, 1), new Vec3(0), true));
             AddEntity(e5);
+
+            Entity e6 = new Entity();
+            e6.AddComponent(new TransformComponent(new Vec3(700, 450), new Vec3(3)));
+            e6.AddComponent(new SpriteSheetComponent("spritesheet", new Vec2(32), new Dictionary<string, List<int>>() { { "idle", new List<int>() { 13, 14, 15, 16, 17, 18, 19, 20 } } }, "idle", 150));
+            AddEntity(e6);
 
             Entity e4 = new Entity();
             e4.AddComponent(new TransformComponent(new Vec3(600, 450)));
