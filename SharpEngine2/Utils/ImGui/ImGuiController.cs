@@ -212,6 +212,7 @@ namespace SE2.Utils
 
         private void RenderImDrawData(ImDrawDataPtr drawData)
         {
+            GL.BindVertexArray(_vertexArray);
             if (drawData.CmdListsCount == 0)
                 return;
 
