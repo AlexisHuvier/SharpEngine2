@@ -32,6 +32,8 @@ namespace SE2
         {
             e.SetScene(null);
             e.id = -1;
+            if (window.camera.follow == e)
+                window.camera.follow = null;
             entities.Remove(e);
         }
 
