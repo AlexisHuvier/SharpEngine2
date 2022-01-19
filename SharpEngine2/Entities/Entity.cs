@@ -8,11 +8,13 @@ namespace SE2.Entities
     {
         internal List<Components.Component> components;
         internal Scene scene;
+        public int id;
 
         public Entity()
         {
             components = new List<Components.Component>();
             scene = null;
+            id = -1;
         }
 
         public virtual void SetScene(Scene w) => scene = w;

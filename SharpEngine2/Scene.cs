@@ -7,12 +7,16 @@ namespace SE2
         internal Window window;
         internal List<Entities.Entity> entities;
         internal List<Widgets.Widget> widgets;
+        internal int _entityCount;
+        internal int _widgetCount;
 
         public Scene()
         {
             window = null;
             entities = new List<Entities.Entity>();
             widgets = new List<Widgets.Widget>();
+            _entityCount = 0;
+            _widgetCount = 0;
         }
 
         public virtual List<Entities.Entity> GetEntities() => entities;
@@ -20,12 +24,14 @@ namespace SE2
         public virtual void AddEntity(Entities.Entity e)
         {
             e.SetScene(this);
+            e.id = _entityCount++;
             entities.Insert(0, e);
         }
 
         public virtual void RemoveEntity(Entities.Entity e)
         {
             e.SetScene(null);
+            e.id = -1;
             entities.Remove(e);
         }
 
@@ -34,12 +40,14 @@ namespace SE2
         public virtual void AddWidget(Widgets.Widget w)
         {
             w.SetScene(this);
+            w.id = _widgetCount++;
             widgets.Insert(0, w);
         }
 
         public virtual void RemoveWidget(Widgets.Widget w)
         {
             w.SetScene(null);
+            w.id = -1;
             widgets.Remove(w);
         }
 

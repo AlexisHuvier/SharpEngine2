@@ -3,6 +3,7 @@
     public class Widget
     {
         internal Scene scene;
+        public int id;
         public Utils.Vec3 position;
         public Utils.Vec3 scale;
         public int rotation;
@@ -16,6 +17,7 @@
             this.active = active;
             this.scale = scale;
             this.rotation = rotation;
+            id = -1;
         }
 
         public virtual void SetScene(Scene w) => scene = w;
