@@ -33,11 +33,6 @@ namespace SE2.Graphics.Renderers
             float tx = (frameIndex % numPerRow) * tw;
             float ty = 1 - (frameIndex / numPerRow + 1) * th;
 
-            _vertices = new float[]
-            {
-                
-            };
-
             if (flipX && flipY)
             {
                 _vertices = new float[]
