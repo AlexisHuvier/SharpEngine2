@@ -75,9 +75,6 @@ namespace SE2.Graphics.Renderers
 
                 x += ch.Advance * scale.x;
             }
-
-            GL.BindVertexArray(0);
-            GL.BindTexture(TextureTarget.Texture2D, 0);
         }
 
         public static void Unload()
