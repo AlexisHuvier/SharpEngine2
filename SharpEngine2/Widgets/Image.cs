@@ -36,7 +36,7 @@ namespace SE2.Widgets
             Matrix4 model = Matrix4.Identity
                 * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(rotation))
                 * Matrix4.CreateScale(GetWindow().textureManager.GetTexture(texture).size.X / 2, GetWindow().textureManager.GetTexture(texture).size.Y / 2, 1)
-                * Matrix4.CreateScale(scale.x, scale.y, 1)
+                * Matrix4.CreateScale(scale.x, scale.y, scale.z)
                 * Matrix4.CreateTranslation(new Vector3(position.x, position.y, position.z) + GetWindow().camera.Position);
 
             Graphics.Renderers.SpriteRenderer.Render(GetWindow(), shaderName, texture, flipX, flipY, model);

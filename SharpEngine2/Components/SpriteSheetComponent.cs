@@ -85,7 +85,7 @@ namespace SE2.Components
                     Matrix4 model = Matrix4.Identity
                         * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(tc.rotation))
                         * Matrix4.CreateScale(spriteSize.x / 2, spriteSize.y / 2, 1)
-                        * Matrix4.CreateScale(tc.scale.x, tc.scale.y, 1)
+                        * Matrix4.CreateScale(tc.scale.x, tc.scale.y, tc.scale.z)
                         * Matrix4.CreateTranslation(new Vector3(tc.position.x, tc.position.y, tc.position.z));
 
                     Graphics.Renderers.SpriteSheetRenderer.Render(GetWindow(), shaderName, texture, animations[currentAnim][currentImage], spriteSize, flipX, flipY, model);
