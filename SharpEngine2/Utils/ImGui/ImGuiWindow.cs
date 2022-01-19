@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Numerics;
 using SE2.Components;
+using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace SE2.Utils
 {
@@ -16,6 +18,7 @@ namespace SE2.Utils
         private static string _title;
 
         private static int _currentSelectedEntity = 0;
+        private static string _newComponent = "";
 
         private static int _currentSelectedWidget = 0;
 
@@ -118,141 +121,182 @@ namespace SE2.Utils
         internal static void RenderEntityInfo(Window win)
         {
             ImGui.Begin("Entity", ref _showEntity);
-            ImGui.ListBox("", 
-                ref _currentSelectedEntity, 
-                win.scenes[win.currentScene].entities.Select(x => $"Entity n°{win.scenes[win.currentScene].entities.IndexOf(x) + 1}").ToArray(),
+            ImGui.ListBox("",
+                ref _currentSelectedEntity,
+                win.scenes[win.currentScene].entities.Select(x => $"Entity (ID : {x.id})").ToArray(),
                 win.scenes[win.currentScene].entities.Count);
             ImGui.Separator();
 
-            foreach(Component c in win.scenes[win.currentScene].entities[_currentSelectedEntity].components)
+            if (ImGui.Button("Add Entity"))
             {
-                if (c.GetType() == typeof(BasicPhysicsComponent))
+                Entities.Entity e = new Entities.Entity();
+                win.scenes[win.currentScene].AddEntity(e);
+            }
+
+            ImGui.BeginDisabled(win.scenes[win.currentScene].entities.Count == 0);
+            if (ImGui.Button("Remove Entity"))
+                win.scenes[win.currentScene].RemoveEntity(win.scenes[win.currentScene].entities[_currentSelectedEntity]);
+            ImGui.EndDisabled();
+
+            ImGui.Separator();
+
+            if (win.scenes[win.currentScene].entities.Count > 0 && _currentSelectedEntity < win.scenes[win.currentScene].entities.Count)
+            {
+                foreach (Component c in win.scenes[win.currentScene].entities[_currentSelectedEntity].components)
                 {
-                    if (ImGui.CollapsingHeader("BasicPhysicsComponent"))
+                    if (c.GetType() == typeof(BasicPhysicsComponent))
                     {
-                        ImGui.DragInt("Max Gravity", ref ((BasicPhysicsComponent)c).maxGravity);
-                        ImGui.DragInt("Grounded Gravity", ref ((BasicPhysicsComponent)c).groundedGravity);
-                        ImGui.DragInt("Time Gravity", ref ((BasicPhysicsComponent)c).timeGravity);
-                        ImGui.Separator();
+                        if (ImGui.CollapsingHeader("BasicPhysicsComponent"))
+                        {
+                            ImGui.DragInt("Max Gravity", ref ((BasicPhysicsComponent)c).maxGravity);
+                            ImGui.DragInt("Grounded Gravity", ref ((BasicPhysicsComponent)c).groundedGravity);
+                            ImGui.DragInt("Time Gravity", ref ((BasicPhysicsComponent)c).timeGravity);
+                            ImGui.Separator();
+                        }
+                    }
+                    else if (c.GetType() == typeof(ControlComponent))
+                    {
+                        if (ImGui.CollapsingHeader("ControlComponent"))
+                        {
+                            ImGui.DragInt("Speed", ref ((ControlComponent)c).speed);
+                            ImGui.DragInt("Jump Force", ref ((ControlComponent)c).jumpForce);
+                            ImGui.Separator();
+                        }
+                    }
+                    else if (c.GetType() == typeof(RectCollisionComponent))
+                    {
+                        if (ImGui.CollapsingHeader("RectCollisionComponent"))
+                        {
+                            ImGui.DragFloat("Size X", ref ((RectCollisionComponent)c).size.x);
+                            ImGui.DragFloat("Size Y", ref ((RectCollisionComponent)c).size.y);
+                            ImGui.DragFloat("Size Z", ref ((RectCollisionComponent)c).size.z);
+                            ImGui.Separator();
+                            ImGui.DragFloat("Offset X", ref ((RectCollisionComponent)c).offset.x);
+                            ImGui.DragFloat("Offset Y", ref ((RectCollisionComponent)c).offset.y);
+                            ImGui.DragFloat("Offset Z", ref ((RectCollisionComponent)c).offset.z);
+                            ImGui.Separator();
+                            ImGui.Checkbox("Solid", ref ((RectCollisionComponent)c).solid);
+                            ImGui.Separator();
+                        }
+                    }
+                    else if (c.GetType() == typeof(SphereCollisionComponent))
+                    {
+                        if (ImGui.CollapsingHeader("SphereCollisionComponent"))
+                        {
+                            ImGui.DragFloat("Radius", ref ((SphereCollisionComponent)c).radius);
+                            ImGui.Separator();
+                            ImGui.DragFloat("Offset X", ref ((SphereCollisionComponent)c).offset.x);
+                            ImGui.DragFloat("Offset Y", ref ((SphereCollisionComponent)c).offset.y);
+                            ImGui.DragFloat("Offset Z", ref ((SphereCollisionComponent)c).offset.z);
+                            ImGui.Separator();
+                            ImGui.Checkbox("Solid", ref ((SphereCollisionComponent)c).solid);
+                            ImGui.Separator();
+                        }
+                    }
+                    else if (c.GetType() == typeof(SpriteComponent))
+                    {
+                        if (ImGui.CollapsingHeader("SpriteComponent"))
+                        {
+                            ImGui.InputText("Texture", ref ((SpriteComponent)c).texture, 40);
+                            ImGui.InputText("Shader Name", ref ((SpriteComponent)c).shaderName, 40);
+                            ImGui.Separator();
+                            ImGui.Checkbox("Flip X", ref ((SpriteComponent)c).flipX);
+                            ImGui.Checkbox("Flip Y", ref ((SpriteComponent)c).flipY);
+                            ImGui.Separator();
+                            ImGui.Checkbox("Displayed", ref ((SpriteComponent)c).displayed);
+                            ImGui.Separator();
+                        }
+                    }
+                    else if (c.GetType() == typeof(SpriteSheetComponent))
+                    {
+                        if (ImGui.CollapsingHeader("SpriteSheetComponent"))
+                        {
+                            ImGui.InputText("Texture", ref ((SpriteSheetComponent)c).texture, 40);
+                            ImGui.InputText("Shader Name", ref ((SpriteSheetComponent)c).shaderName, 40);
+                            ImGui.InputText("Current Animation Name", ref ((SpriteSheetComponent)c).currentAnim, 40);
+                            ImGui.Separator();
+                            ImGui.DragFloat("Sprite Size X", ref ((SpriteSheetComponent)c).spriteSize.x);
+                            ImGui.DragFloat("Sprite Size Y", ref ((SpriteSheetComponent)c).spriteSize.y);
+                            ImGui.DragInt("Time Frame MS", ref ((SpriteSheetComponent)c).timerFrameMS);
+                            ImGui.Separator();
+                            ImGui.Checkbox("Flip X", ref ((SpriteSheetComponent)c).flipX);
+                            ImGui.Checkbox("Flip Y", ref ((SpriteSheetComponent)c).flipY);
+                            ImGui.Separator();
+                            ImGui.Checkbox("Displayed", ref ((SpriteSheetComponent)c).displayed);
+                            ImGui.Separator();
+                        }
+                    }
+                    else if (c.GetType() == typeof(TextComponent))
+                    {
+                        if (ImGui.CollapsingHeader("TextComponent"))
+                        {
+                            ImGui.InputText("Text", ref ((TextComponent)c).text, 400);
+                            ImGui.InputText("Shader Name", ref ((TextComponent)c).shaderName, 40);
+                            ImGui.InputText("Font Name", ref ((TextComponent)c).font, 40);
+                            ImGui.Separator();
+                            ImGui.DragInt("Color Red", ref ((TextComponent)c).color.internalR, 1f, 0, 255);
+                            ImGui.DragInt("Color Green", ref ((TextComponent)c).color.internalG, 1f, 0, 255);
+                            ImGui.DragInt("Color Blue", ref ((TextComponent)c).color.internalB, 1f, 0, 255);
+                            ImGui.DragInt("Color Alpha", ref ((TextComponent)c).color.internalA, 1f, 0, 255);
+                            ImGui.Separator();
+                            ImGui.Checkbox("Displayed", ref ((TextComponent)c).displayed);
+                            ImGui.Separator();
+                        }
+                    }
+                    else if (c.GetType() == typeof(TileMapComponent))
+                    {
+                        if (ImGui.CollapsingHeader("TileMapComponent"))
+                        {
+                            ImGui.Checkbox("Displayed", ref ((TileMapComponent)c).displayed);
+                            ImGui.Separator();
+                        }
+                    }
+                    else if (c.GetType() == typeof(TransformComponent))
+                    {
+                        if (ImGui.CollapsingHeader("TransformComponent"))
+                        {
+                            ImGui.DragFloat("Position X", ref ((TransformComponent)c).position.x);
+                            ImGui.DragFloat("Position Y", ref ((TransformComponent)c).position.y);
+                            ImGui.DragFloat("Position Z", ref ((TransformComponent)c).position.z);
+                            ImGui.Separator();
+                            ImGui.DragFloat("Scale X", ref ((TransformComponent)c).scale.x, 0.05f);
+                            ImGui.DragFloat("Scale Y", ref ((TransformComponent)c).scale.y, 0.05f);
+                            ImGui.DragFloat("Scale Z", ref ((TransformComponent)c).scale.z, 0.05f);
+                            ImGui.Separator();
+                            ImGui.DragInt("Rotation", ref ((TransformComponent)c).rotation);
+                            ImGui.Separator();
+                        }
+                    }
+                    else
+                    {
+                        if (ImGui.CollapsingHeader(c.ToString()))
+                            ImGui.Separator();
                     }
                 }
-                else if (c.GetType() == typeof(ControlComponent))
+
+                ImGui.InputText("Nouveau Composant", ref _newComponent, 40);
+                if (ImGui.Button("Ajouter"))
                 {
-                    if (ImGui.CollapsingHeader("ControlComponent"))
-                    {
-                        ImGui.DragInt("Speed", ref ((ControlComponent)c).speed);
-                        ImGui.DragInt("Jump Force", ref ((ControlComponent)c).jumpForce);
-                        ImGui.Separator();
-                    }
-                }
-                else if (c.GetType() == typeof(RectCollisionComponent))
-                {
-                    if (ImGui.CollapsingHeader("RectCollisionComponent"))
-                    {
-                        ImGui.DragFloat("Size X", ref ((RectCollisionComponent)c).size.x);
-                        ImGui.DragFloat("Size Y", ref ((RectCollisionComponent)c).size.y);
-                        ImGui.DragFloat("Size Z", ref ((RectCollisionComponent)c).size.z);
-                        ImGui.Separator();
-                        ImGui.DragFloat("Offset X", ref ((RectCollisionComponent)c).offset.x);
-                        ImGui.DragFloat("Offset Y", ref ((RectCollisionComponent)c).offset.y);
-                        ImGui.DragFloat("Offset Z", ref ((RectCollisionComponent)c).offset.z);
-                        ImGui.Separator();
-                        ImGui.Checkbox("Solid", ref ((RectCollisionComponent)c).solid);
-                        ImGui.Separator();
-                    }
-                }
-                else if (c.GetType() == typeof(SphereCollisionComponent))
-                {
-                    if (ImGui.CollapsingHeader("SphereCollisionComponent"))
-                    {
-                        ImGui.DragFloat("Radius", ref ((SphereCollisionComponent)c).radius);
-                        ImGui.Separator();
-                        ImGui.DragFloat("Offset X", ref ((SphereCollisionComponent)c).offset.x);
-                        ImGui.DragFloat("Offset Y", ref ((SphereCollisionComponent)c).offset.y);
-                        ImGui.DragFloat("Offset Z", ref ((SphereCollisionComponent)c).offset.z);
-                        ImGui.Separator();
-                        ImGui.Checkbox("Solid", ref ((SphereCollisionComponent)c).solid);
-                        ImGui.Separator();
-                    }
-                }
-                else if (c.GetType() == typeof(SpriteComponent))
-                {
-                    if (ImGui.CollapsingHeader("SpriteComponent"))
-                    {
-                        ImGui.InputText("Texture", ref ((SpriteComponent)c).texture, 40);
-                        ImGui.InputText("Shader Name", ref ((SpriteComponent)c).shaderName, 40);
-                        ImGui.Separator();
-                        ImGui.Checkbox("Flip X", ref ((SpriteComponent)c).flipX);
-                        ImGui.Checkbox("Flip Y", ref ((SpriteComponent)c).flipY);
-                        ImGui.Separator();
-                        ImGui.Checkbox("Displayed", ref ((SpriteComponent)c).displayed);
-                        ImGui.Separator();
-                    }
-                }
-                else if (c.GetType() == typeof(SpriteSheetComponent))
-                {
-                    if (ImGui.CollapsingHeader("SpriteSheetComponent"))
-                    {
-                        ImGui.InputText("Texture", ref ((SpriteSheetComponent)c).texture, 40);
-                        ImGui.InputText("Shader Name", ref ((SpriteSheetComponent)c).shaderName, 40);
-                        ImGui.InputText("Current Animation Name", ref ((SpriteSheetComponent)c).currentAnim, 40);
-                        ImGui.Separator();
-                        ImGui.DragFloat("Sprite Size X", ref ((SpriteSheetComponent)c).spriteSize.x);
-                        ImGui.DragFloat("Sprite Size Y", ref ((SpriteSheetComponent)c).spriteSize.y);
-                        ImGui.DragInt("Time Frame MS", ref ((SpriteSheetComponent)c).timerFrameMS);
-                        ImGui.Separator();
-                        ImGui.Checkbox("Flip X", ref ((SpriteSheetComponent)c).flipX);
-                        ImGui.Checkbox("Flip Y", ref ((SpriteSheetComponent)c).flipY);
-                        ImGui.Separator();
-                        ImGui.Checkbox("Displayed", ref ((SpriteSheetComponent)c).displayed);
-                        ImGui.Separator();
-                    }
-                }
-                else if (c.GetType() == typeof(TextComponent))
-                {
-                    if (ImGui.CollapsingHeader("TextComponent"))
-                    {
-                        ImGui.InputText("Text", ref ((TextComponent)c).text, 400);
-                        ImGui.InputText("Shader Name", ref ((TextComponent)c).shaderName, 40);
-                        ImGui.InputText("Font Name", ref ((TextComponent)c).font, 40);
-                        ImGui.Separator();
-                        ImGui.DragInt("Color Red", ref ((TextComponent)c).color.internalR, 1f, 0, 255);
-                        ImGui.DragInt("Color Green", ref ((TextComponent)c).color.internalG, 1f, 0, 255);
-                        ImGui.DragInt("Color Blue", ref ((TextComponent)c).color.internalB, 1f, 0, 255);
-                        ImGui.DragInt("Color Alpha", ref ((TextComponent)c).color.internalA, 1f, 0, 255);
-                        ImGui.Separator();
-                        ImGui.Checkbox("Displayed", ref ((TextComponent)c).displayed);
-                        ImGui.Separator();
-                    }
-                }
-                else if (c.GetType() == typeof(TileMapComponent))
-                {
-                    if (ImGui.CollapsingHeader("TileMapComponent"))
-                    {
-                        ImGui.Checkbox("Displayed", ref ((TileMapComponent)c).displayed);
-                        ImGui.Separator();
-                    }
-                }
-                else if (c.GetType() == typeof(TransformComponent))
-                {
-                    if(ImGui.CollapsingHeader("TransformComponent"))
-                    {
-                        ImGui.DragFloat("Position X", ref ((TransformComponent)c).position.x);
-                        ImGui.DragFloat("Position Y", ref ((TransformComponent)c).position.y);
-                        ImGui.DragFloat("Position Z", ref ((TransformComponent)c).position.z);
-                        ImGui.Separator();
-                        ImGui.DragFloat("Scale X", ref ((TransformComponent)c).scale.x, 0.05f);
-                        ImGui.DragFloat("Scale Y", ref ((TransformComponent)c).scale.y, 0.05f);
-                        ImGui.DragFloat("Scale Z", ref ((TransformComponent)c).scale.z, 0.05f);
-                        ImGui.Separator();
-                        ImGui.DragInt("Rotation", ref ((TransformComponent)c).rotation);
-                        ImGui.Separator();
-                    }
-                }
-                else
-                {
-                    if (ImGui.CollapsingHeader(c.ToString()))
-                        ImGui.Separator();
+                    if(_newComponent == "BasicPhysicsComponent")
+                        win.scenes[win.currentScene].entities[_currentSelectedEntity].AddComponent(new BasicPhysicsComponent());
+                    else if (_newComponent == "ControlComponent")
+                        win.scenes[win.currentScene].entities[_currentSelectedEntity].AddComponent(new ControlComponent());
+                    else if (_newComponent == "RectCollisionComponent")
+                        win.scenes[win.currentScene].entities[_currentSelectedEntity].AddComponent(new RectCollisionComponent(new Vec3(0), new Vec3(0), true));
+                    else if (_newComponent == "SphereCollisionComponent")
+                        win.scenes[win.currentScene].entities[_currentSelectedEntity].AddComponent(new SphereCollisionComponent(0, new Vec3(0), true));
+                    else if (_newComponent == "SpriteComponent")
+                        win.scenes[win.currentScene].entities[_currentSelectedEntity].AddComponent(new SpriteComponent(""));
+                    else if (_newComponent == "SpriteSheetComponent")
+                        win.scenes[win.currentScene].entities[_currentSelectedEntity].AddComponent(new SpriteSheetComponent("", new Vec2(0), new Dictionary<string, List<int>>()));
+                    else if (_newComponent == "TextComponent")
+                        win.scenes[win.currentScene].entities[_currentSelectedEntity].AddComponent(new TextComponent("", ""));
+                    else if (_newComponent == "TileMapComponent")
+                        win.scenes[win.currentScene].entities[_currentSelectedEntity].AddComponent(new TileMapComponent(""));
+                    else if (_newComponent == "TransformComponent")
+                        win.scenes[win.currentScene].entities[_currentSelectedEntity].AddComponent(new TransformComponent());
+                    else
+                        Trace.WriteLineIf(Window.DEBUG, $"[DEBUG] ImGui : Unknown Component {_newComponent}");
                 }
             }
 
