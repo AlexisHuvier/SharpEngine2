@@ -156,6 +156,7 @@ namespace SE2
             imguiController = new ImGuiController(ClientSize.X, ClientSize.Y);
             Graphics.Renderers.TextRenderer.Load();
             Graphics.Renderers.RectRenderer.Load();
+            Graphics.Renderers.CircleRenderer.Load();
             Trace.WriteLineIf(DEBUG, $"[DEBUG] Window loaded");
 
             foreach (Scene w in scenes)
@@ -247,6 +248,7 @@ namespace SE2
             Graphics.Renderers.SpriteSheetRenderer.Unload();
             Graphics.Renderers.TextRenderer.Unload();
             Graphics.Renderers.RectRenderer.Unload();
+            Graphics.Renderers.CircleRenderer.Unload();
             fontManager.Unload();
             shaderManager.Unload();
             soundManager.Unload();
