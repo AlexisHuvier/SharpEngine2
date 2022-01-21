@@ -9,6 +9,12 @@
         CLASSICJUMP
     }
 
+    public enum ControlAxis
+    {
+        UPDOWN,
+        LEFTRIGHT
+    }
+
     public enum ControlKey
     {
         UP,

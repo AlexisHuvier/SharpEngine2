@@ -2,6 +2,19 @@
 {
     public class Inputs
     {
+        public enum HatState
+        {
+            CENTERED = 0,
+            DOWN = 4,
+            LEFT = 8,
+            LEFTDOWN = 12,
+            LEFTUP = 9,
+            RIGHT = 2,
+            RIGHTDOWN = 6,
+            RIGHTUP = 3,
+            UP = 1
+        }
+
         public enum MouseButton
         {
             LEFT,
