@@ -28,6 +28,7 @@ namespace SE2
         public Managers.ShaderManager shaderManager;
         public Managers.SoundManager soundManager;
         public Managers.TextureManager textureManager;
+        public Managers.InputManager inputManager;
 
         public Window(int width, int height, string title, Color bgColor, bool debug = false, bool vsync = true): base(GameWindowSettings.Default, new NativeWindowSettings()
             {
@@ -97,7 +98,7 @@ namespace SE2
             shaderManager = new Managers.ShaderManager();
             soundManager = new Managers.SoundManager();
             textureManager = new Managers.TextureManager();
-            Managers.InputManager.Setup(this);
+            inputManager = new Managers.InputManager(this);
 
             shaderManager.AddShader("sprite", new Shader(Shaders.GetBasicSpriteShaderVertex(), Shaders.GetBasicSpriteShaderFragment()));
             shaderManager.AddShader("text", new Shader(Shaders.GetBasicFontShaderVertex(), Shaders.GetBasicFontShaderFragment()));
