@@ -181,17 +181,7 @@ namespace SE2.Utils
             {
                 foreach (Component c in win.scenes[win.currentScene].entities[_currentSelectedEntity].components)
                 {
-                    if (c.GetType() == typeof(BasicPhysicsComponent))
-                    {
-                        if (ImGui.CollapsingHeader("BasicPhysicsComponent"))
-                        {
-                            ImGui.DragInt("Max Gravity", ref ((BasicPhysicsComponent)c).maxGravity);
-                            ImGui.DragInt("Grounded Gravity", ref ((BasicPhysicsComponent)c).groundedGravity);
-                            ImGui.DragInt("Time Gravity", ref ((BasicPhysicsComponent)c).timeGravity);
-                            ImGui.Separator();
-                        }
-                    }
-                    else if (c.GetType() == typeof(ControlComponent))
+                    if (c.GetType() == typeof(ControlComponent))
                     {
                         if (ImGui.CollapsingHeader("ControlComponent"))
                         {
@@ -201,19 +191,21 @@ namespace SE2.Utils
                             ImGui.Separator();
                         }
                     }
-                    else if (c.GetType() == typeof(RectCollisionComponent))
+                    else if(c.GetType() == typeof(PhysicsComponent))
                     {
-                        if (ImGui.CollapsingHeader("RectCollisionComponent"))
+                        if(ImGui.CollapsingHeader("PhysicsComponent"))
                         {
-                            ImGui.DragFloat("Size X", ref ((RectCollisionComponent)c).size.x);
-                            ImGui.DragFloat("Size Y", ref ((RectCollisionComponent)c).size.y);
-                            ImGui.DragFloat("Size Z", ref ((RectCollisionComponent)c).size.z);
-                            ImGui.Separator();
-                            ImGui.DragFloat("Offset X", ref ((RectCollisionComponent)c).offset.x);
-                            ImGui.DragFloat("Offset Y", ref ((RectCollisionComponent)c).offset.y);
-                            ImGui.DragFloat("Offset Z", ref ((RectCollisionComponent)c).offset.z);
-                            ImGui.Separator();
-                            ImGui.Checkbox("Solid", ref ((RectCollisionComponent)c).solid);
+                            ImGui.Text($"Position : {((PhysicsComponent)c).GetPosition()}");
+                            ImGui.Text($"Rotation : {((PhysicsComponent)c).GetRotation()}");
+                            ImGui.Text($"Fixed Rotation : {((PhysicsComponent)c).body.FixedRotation}");
+                            ImGui.Text($"Body Type : {((PhysicsComponent)c).body.BodyType}");
+                            ImGui.Text($"Mass : {((PhysicsComponent)c).body.Mass}");
+                            ImGui.Text($"Is Awake : {((PhysicsComponent)c).body.Awake}");
+                            ImGui.Text($"Ignore Gravity : {((PhysicsComponent)c).body.IgnoreGravity}");
+                            ImGui.Text($"Angular Velocity : {((PhysicsComponent)c).body.AngularVelocity}");
+                            ImGui.Text($"Angular Damping : {((PhysicsComponent)c).body.AngularDamping}");
+                            ImGui.Text($"Linear Velocity : {((PhysicsComponent)c).body.LinearVelocity}");
+                            ImGui.Text($"Linear Damping : {((PhysicsComponent)c).body.LinearDamping}");
                             ImGui.Separator();
                         }
                     }
@@ -232,20 +224,6 @@ namespace SE2.Utils
                             ImGui.Separator();
                             ImGui.InputText("Shader Name", ref ((RectComponent)c).shaderName, 40);
                             ImGui.Checkbox("Displayed", ref ((RectComponent)c).displayed);
-                            ImGui.Separator();
-                        }
-                    }
-                    else if (c.GetType() == typeof(SphereCollisionComponent))
-                    {
-                        if (ImGui.CollapsingHeader("SphereCollisionComponent"))
-                        {
-                            ImGui.DragFloat("Radius", ref ((SphereCollisionComponent)c).radius);
-                            ImGui.Separator();
-                            ImGui.DragFloat("Offset X", ref ((SphereCollisionComponent)c).offset.x);
-                            ImGui.DragFloat("Offset Y", ref ((SphereCollisionComponent)c).offset.y);
-                            ImGui.DragFloat("Offset Z", ref ((SphereCollisionComponent)c).offset.z);
-                            ImGui.Separator();
-                            ImGui.Checkbox("Solid", ref ((SphereCollisionComponent)c).solid);
                             ImGui.Separator();
                         }
                     }
@@ -333,14 +311,10 @@ namespace SE2.Utils
                 ImGui.InputText("New Component", ref _newComponent, 40);
                 if (ImGui.Button("Add"))
                 {
-                    if(_newComponent == "BasicPhysicsComponent")
-                        win.scenes[win.currentScene].entities[_currentSelectedEntity].AddComponent(new BasicPhysicsComponent());
+                    if(_newComponent == "PhysicsComponent")
+                        win.scenes[win.currentScene].entities[_currentSelectedEntity].AddComponent(new PhysicsComponent(new Vec2(1)));
                     else if (_newComponent == "ControlComponent")
                         win.scenes[win.currentScene].entities[_currentSelectedEntity].AddComponent(new ControlComponent());
-                    else if (_newComponent == "RectCollisionComponent")
-                        win.scenes[win.currentScene].entities[_currentSelectedEntity].AddComponent(new RectCollisionComponent(new Vec3(0), new Vec3(0), true));
-                    else if (_newComponent == "SphereCollisionComponent")
-                        win.scenes[win.currentScene].entities[_currentSelectedEntity].AddComponent(new SphereCollisionComponent(0, new Vec3(0), true));
                     else if (_newComponent == "SpriteComponent")
                         win.scenes[win.currentScene].entities[_currentSelectedEntity].AddComponent(new SpriteComponent(""));
                     else if (_newComponent == "SpriteSheetComponent")

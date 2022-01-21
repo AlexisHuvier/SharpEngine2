@@ -12,14 +12,12 @@ namespace SE2.Components
         private Dictionary<Utils.ControlKey, int> buttons;
         private Dictionary<Utils.ControlKey, KeyValuePair<int, Utils.Inputs.HatState>> hats;
         public int activeJoystick;
-        public bool isMoving;
 
         public ControlComponent(Utils.ControlType type = Utils.ControlType.FOURDIRECTION, int spd = 100, int jmpForce = 100)
         {
             controlType = type;
             speed = spd;
             jumpForce = jmpForce;
-            isMoving = false;
             activeJoystick = -1;
 
             keys = new Dictionary<Utils.ControlKey, Utils.Inputs.Key>()
@@ -83,8 +81,6 @@ namespace SE2.Components
         {
             base.Update(deltaTime);
 
-            isMoving = false;
-
             foreach (Entities.Entity e in entities)
             {
                 if (e.GetComponent<TransformComponent>() is TransformComponent tc)
@@ -134,36 +130,15 @@ namespace SE2.Components
                                 pos.x += speed * (float)deltaTime;
                             if (IsControlKeyDown(Utils.ControlKey.UP) || IsAxisTriggered(Utils.ControlAxis.UPDOWN, true))
                             {
-                                if (e.GetComponent<BasicPhysicsComponent>() is BasicPhysicsComponent pc && pc.grounded)
-                                {
-                                    pc.grounded = false;
-                                    pc.gravity = -jumpForce;
-                                }
+                                throw new System.NotImplementedException();
                             }
                             break;
                     }
 
-                    if (e.GetComponent<RectCollisionComponent>() is RectCollisionComponent rcc)
-                    {
-                        if (rcc.CanGo(pos, "ControlComponent"))
-                        {
-                            isMoving = true;
-                            tc.position = pos;
-                        }
-                    }
-                    else if (e.GetComponent<SphereCollisionComponent>() is SphereCollisionComponent scc)
-                    {
-                        if (scc.CanGo(pos, "ControlComponent"))
-                        {
-                            isMoving = true;
-                            tc.position = pos;
-                        }
-                    }
+                    if (e.GetComponent<PhysicsComponent>() is PhysicsComponent pc)
+                        pc.SetPosition(new Utils.Vec2(pos.x, pos.y));
                     else
-                    {
-                        isMoving = true;
                         tc.position = pos;
-                    }
                 }
             }
         }
