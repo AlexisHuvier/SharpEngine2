@@ -4,6 +4,7 @@ using SE2.Components;
 using SE2.Widgets;
 using SE2.Utils;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SE2Test
 {
@@ -48,9 +49,9 @@ namespace SE2Test
         {
             base.Update(deltaTime);
 
-            if (SE2.Managers.InputManager.IsKeyPressed(Inputs.Key.X))
+            if (GetWindow().inputManager.IsKeyPressed(Inputs.Key.X))
                 e5.GetComponent<SpriteSheetComponent>().flipX = !e5.GetComponent<SpriteSheetComponent>().flipX;
-            if (SE2.Managers.InputManager.IsKeyPressed(Inputs.Key.Y))
+            if (GetWindow().inputManager.IsKeyPressed(Inputs.Key.Y))
                 e5.GetComponent<SpriteSheetComponent>().flipY = !e5.GetComponent<SpriteSheetComponent>().flipY;
         }
 
