@@ -124,6 +124,8 @@ namespace SE2
             scenes.Remove(scene);
         }
 
+        public Scene GetCurrentScene() => scenes[currentScene];
+
         protected override void OnLoad()
         {
             base.OnLoad();
@@ -158,7 +160,7 @@ namespace SE2
 
             foreach (Scene w in scenes)
                 w.Load();
-            Trace.WriteLineIf(DEBUG, $"[DEBUG] Worlds loaded");
+            Trace.WriteLineIf(DEBUG, $"[DEBUG] Scenes loaded");
         }
 
         protected override void OnRenderFrame(FrameEventArgs args)
@@ -260,7 +262,7 @@ namespace SE2
             foreach (Scene w in scenes)
                 w.Init();
 
-            Trace.WriteLineIf(DEBUG, $"[DEBUG] Worlds Initialized");
+            Trace.WriteLineIf(DEBUG, $"[DEBUG] Scenes Initialized");
 
             base.Run();
         }

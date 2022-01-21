@@ -44,7 +44,7 @@ namespace SE2.Managers
         public bool MouseInRectangle(Utils.Vec2 position, Utils.Vec2 size) => window.MouseState.X >= position.x && window.MouseState.X <= position.x + size.x &&
             window.MouseState.Y >= position.y && window.MouseState.Y <= position.y + size.y;
         public float GetMouseWheelValue() => window.MouseState.ScrollDelta.Y;
-        public Utils.Vec2 GetMousePosition() => new Utils.Vec2(window.MouseState.X, window.MouseState.Y);
+        public Utils.Vec2 GetMousePosition() => new Utils.Vec2(window.MouseState.X, window.ClientSize.Y - window.MouseState.Y);
 
         internal Keys GetKeys(Utils.Inputs.Key key)
         {

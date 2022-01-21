@@ -79,6 +79,7 @@ void main()
 }";
         }
 
+        // FONT SHADER
         public static string GetBasicFontShaderVertex()
         {
             return @"
@@ -118,6 +119,7 @@ void main()
 }  ";
         }
 
+        // IMGUI SHADER
         public static string GetImGUIShaderVertex()
         {
             return @"
