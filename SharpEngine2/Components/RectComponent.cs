@@ -29,9 +29,9 @@ namespace SE2.Components
                 if (e.GetComponent<TransformComponent>() is TransformComponent tc)
                 {
                     Matrix4 model = Matrix4.Identity
-                        * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(tc.rotation))
                         * Matrix4.CreateScale(size.x / 2, size.y / 2, size.z / 2)
                         * Matrix4.CreateScale(tc.scale.x, tc.scale.y, tc.scale.z)
+                        * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(tc.rotation))
                         * Matrix4.CreateTranslation(new Vector3(tc.position.x, tc.position.y, tc.position.z));
 
                     Graphics.Renderers.RectRenderer.Render(GetWindow(), shaderName, color, model);
