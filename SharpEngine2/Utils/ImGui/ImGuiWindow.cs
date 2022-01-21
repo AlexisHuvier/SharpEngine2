@@ -12,6 +12,7 @@ namespace SE2.Utils
         private static bool _showConsole = false;
         private static bool _showEntity = false;
         private static bool _showWidget = false;
+        private static bool _showJoystick = false;
 
         private static Vector3 _clearColor;
         private static bool _vsync;
@@ -23,10 +24,12 @@ namespace SE2.Utils
         private static int _currentSelectedWidget = 0;
         private static string _newWidget = "";
 
+        private static int _currentSelectedJoystick = 0;
+
         private static void SetupVariables(Window win)
         {
             _clearColor = new Vector3(win.backgroundColor.Normalized()[0], win.backgroundColor.Normalized()[1], win.backgroundColor.Normalized()[2]);
-            _vsync = win.VSync == OpenTK.Windowing.Common.VSyncMode.On ? true : false;
+            _vsync = win.VSync == OpenTK.Windowing.Common.VSyncMode.On;
             _title = win.Title;
         }
 
@@ -48,13 +51,10 @@ namespace SE2.Utils
                 ImGui.Begin("Debug", ImGuiWindowFlags.MenuBar);
                 if (ImGui.BeginMenuBar())
                 {
-                    if (ImGui.BeginMenu("Window"))
-                    {
-                        ImGui.MenuItem("Logs", null, ref _showConsole);
-                        ImGui.MenuItem("Entity", null, ref _showEntity);
-                        ImGui.MenuItem("Widget", null, ref _showWidget);
-                        ImGui.EndMenu();
-                    }
+                    ImGui.MenuItem("Logs", null, ref _showConsole);
+                    ImGui.MenuItem("Entity", null, ref _showEntity);
+                    ImGui.MenuItem("Widget", null, ref _showWidget);
+                    ImGui.MenuItem("Joystick", null, ref _showJoystick);
                     ImGui.EndMenuBar();
                 }
 
@@ -102,6 +102,9 @@ namespace SE2.Utils
             if (_showConsole)
                 RenderConsole(win);
 
+            if (_showJoystick)
+                RenderJoystick(win);
+
             if (_showEntity)
                 RenderEntityInfo(win);
 
@@ -116,6 +119,39 @@ namespace SE2.Utils
             ImGui.Begin("Logs", ref _showConsole);
             foreach (string s in ImGuiTraceListener.logs)
                 ImGui.Text(s);
+            ImGui.End();
+        }
+
+        internal static void RenderJoystick(Window win)
+        {
+            ImGui.Begin("Joystick", ref _showJoystick);
+            ImGui.ListBox("",
+                ref _currentSelectedJoystick,
+                win.inputManager.GetConnectedJoysticks().Select(x => $"Joytick {x} ({win.inputManager.GetJoystickName(x)})").ToArray(),
+                win.inputManager.GetConnectedJoysticks().Count);
+            ImGui.Separator();
+            if(win.inputManager.GetConnectedJoysticks().Count > 0 && _currentSelectedJoystick < win.inputManager.GetConnectedJoysticks().Count && win.inputManager.IsJoystickConnected(_currentSelectedJoystick))
+            {
+                ImGui.Text($"Number of Axis : {win.inputManager.GetJoystickAxisNumber(_currentSelectedJoystick)}");
+                ImGui.Text($"Number of Buttons : {win.inputManager.GetJoystickButtonsCount(_currentSelectedJoystick)}");
+                ImGui.Text($"Number of Hats : {win.inputManager.GetJoystickHatsCount(_currentSelectedJoystick)}");
+
+                if(ImGui.CollapsingHeader("Axis"))
+                {
+                    for (int i = 0; i < win.inputManager.GetJoystickAxisNumber(_currentSelectedJoystick); i++)
+                        ImGui.Text($"Axis {i} : {win.inputManager.GetJoystickAxis(_currentSelectedJoystick, i)} (Previous : {win.inputManager.GetJoystickPreviousAxis(_currentSelectedJoystick, i)})");
+                }
+                if(ImGui.CollapsingHeader("Buttons"))
+                {
+                    for (int i = 0; i < win.inputManager.GetJoystickButtonsCount(_currentSelectedJoystick); i++)
+                        ImGui.Text($"Button {i} : {win.inputManager.IsJoystickButtonDown(_currentSelectedJoystick, i)}");
+                }
+                if(ImGui.CollapsingHeader("Hats"))
+                {
+                    for (int i = 0; i < win.inputManager.GetJoystickHatsCount(_currentSelectedJoystick); i++)
+                        ImGui.Text($"Hat {i} : {win.inputManager.GetJoystickHat(_currentSelectedJoystick, i)}");
+                }
+            }
             ImGui.End();
         }
 
@@ -161,6 +197,7 @@ namespace SE2.Utils
                         {
                             ImGui.DragInt("Speed", ref ((ControlComponent)c).speed);
                             ImGui.DragInt("Jump Force", ref ((ControlComponent)c).jumpForce);
+                            ImGui.InputInt("Active Joystick", ref ((ControlComponent)c).activeJoystick);
                             ImGui.Separator();
                         }
                     }
