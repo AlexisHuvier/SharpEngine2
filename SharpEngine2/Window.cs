@@ -102,6 +102,7 @@ namespace SE2
 
             shaderManager.AddShader("sprite", new Shader(Shaders.GetBasicSpriteShaderVertex(), Shaders.GetBasicSpriteShaderFragment()));
             shaderManager.AddShader("text", new Shader(Shaders.GetBasicFontShaderVertex(), Shaders.GetBasicFontShaderFragment()));
+            shaderManager.AddShader("shape", new Shader(Shaders.GetShapeShaderVertex(), Shaders.GetShapeShaderFragment()));
         }
 
         public Window(int width, int height, string title, bool debug = false, bool vsync = true): this(width, height, title, Color.DARK_GRAY, debug, vsync) { }
@@ -152,6 +153,7 @@ namespace SE2
 
             imguiController = new ImGuiController(ClientSize.X, ClientSize.Y);
             Graphics.Renderers.TextRenderer.Load();
+            Graphics.Renderers.RectRenderer.Load();
             Trace.WriteLineIf(DEBUG, $"[DEBUG] Window loaded");
 
             foreach (Scene w in scenes)
@@ -242,6 +244,7 @@ namespace SE2
             Graphics.Renderers.SpriteRenderer.Unload();
             Graphics.Renderers.SpriteSheetRenderer.Unload();
             Graphics.Renderers.TextRenderer.Unload();
+            Graphics.Renderers.RectRenderer.Unload();
             fontManager.Unload();
             shaderManager.Unload();
             soundManager.Unload();

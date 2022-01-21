@@ -217,6 +217,24 @@ namespace SE2.Utils
                             ImGui.Separator();
                         }
                     }
+                    else if(c.GetType() == typeof(RectComponent))
+                    {
+                        if(ImGui.CollapsingHeader("RectComponent"))
+                        {
+                            ImGui.DragFloat("Size X", ref ((RectComponent)c).size.x);
+                            ImGui.DragFloat("Size Y", ref ((RectComponent)c).size.y);
+                            ImGui.DragFloat("Size Z", ref ((RectComponent)c).size.z);
+                            ImGui.Separator();
+                            ImGui.DragInt("Color Red", ref ((RectComponent)c).color.internalR, 1f, 0, 255);
+                            ImGui.DragInt("Color Green", ref ((RectComponent)c).color.internalG, 1f, 0, 255);
+                            ImGui.DragInt("Color Blue", ref ((RectComponent)c).color.internalB, 1f, 0, 255);
+                            ImGui.DragInt("Color Alpha", ref ((RectComponent)c).color.internalA, 1f, 0, 255);
+                            ImGui.Separator();
+                            ImGui.InputText("Shader Name", ref ((RectComponent)c).shaderName, 40);
+                            ImGui.Checkbox("Displayed", ref ((RectComponent)c).displayed);
+                            ImGui.Separator();
+                        }
+                    }
                     else if (c.GetType() == typeof(SphereCollisionComponent))
                     {
                         if (ImGui.CollapsingHeader("SphereCollisionComponent"))
