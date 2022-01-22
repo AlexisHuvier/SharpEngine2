@@ -78,7 +78,6 @@ namespace SE2.Components
 
         public override void Update(double deltaTime)
         {
-            base.Update(deltaTime);
             foreach (Entities.Entity e in entities)
             {
                 if (e.GetComponent<TransformComponent>() is TransformComponent tc)

@@ -20,6 +20,8 @@ namespace SE2.Utils
 
         private static int _currentSelectedEntity = 0;
         private static string _newComponent = "";
+        private static int _tempRotation = 0;
+        private static Vector2 _tempPosition = new Vector2(0);
 
         private static int _currentSelectedWidget = 0;
         private static string _newWidget = "";
@@ -181,7 +183,23 @@ namespace SE2.Utils
             {
                 foreach (Component c in win.scenes[win.currentScene].entities[_currentSelectedEntity].components)
                 {
-                    if (c.GetType() == typeof(ControlComponent))
+                    if (c.GetType() == typeof(CircleComponent))
+                    {
+                        if (ImGui.CollapsingHeader("CircleComponent"))
+                        {
+                            ImGui.DragInt("Color Red", ref ((CircleComponent)c).color.internalR, 1f, 0, 255);
+                            ImGui.DragInt("Color Green", ref ((CircleComponent)c).color.internalG, 1f, 0, 255);
+                            ImGui.DragInt("Color Blue", ref ((CircleComponent)c).color.internalB, 1f, 0, 255);
+                            ImGui.DragInt("Color Alpha", ref ((CircleComponent)c).color.internalA, 1f, 0, 255);
+                            ImGui.Separator();
+                            ImGui.DragFloat("Radius", ref ((CircleComponent)c).radius);
+                            ImGui.DragInt("Number Segment", ref ((CircleComponent)c).numberSegment);
+                            ImGui.InputText("Shader Name", ref ((CircleComponent)c).shaderName, 40);
+                            ImGui.Checkbox("Displayed", ref ((CircleComponent)c).displayed);
+                            ImGui.Separator();
+                        }
+                    }
+                    else if (c.GetType() == typeof(ControlComponent))
                     {
                         if (ImGui.CollapsingHeader("ControlComponent"))
                         {
@@ -206,6 +224,13 @@ namespace SE2.Utils
                             ImGui.Text($"Angular Damping : {((PhysicsComponent)c).body.AngularDamping}");
                             ImGui.Text($"Linear Velocity : {((PhysicsComponent)c).body.LinearVelocity}");
                             ImGui.Text($"Linear Damping : {((PhysicsComponent)c).body.LinearDamping}");
+                            ImGui.Separator();
+                            ImGui.InputFloat2("Position", ref _tempPosition);
+                            if (ImGui.Button("Change Position"))
+                                ((PhysicsComponent)c).SetPosition(new Vec2(_tempPosition.X, _tempPosition.Y));
+                            ImGui.InputInt("Rotation", ref _tempRotation);
+                            if (ImGui.Button("Change Rotation"))
+                                ((PhysicsComponent)c).SetRotation(_tempRotation);
                             ImGui.Separator();
                         }
                     }
