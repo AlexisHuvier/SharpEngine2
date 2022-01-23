@@ -64,36 +64,53 @@ namespace SE2.Utils
             }
         }
 
-        internal static Sound<float> LoadOGG(string file)
+        internal static Sound<short> LoadOGG(string file)
         {
             VorbisReader reader = new VorbisReader(file);
 
             int num_channels = reader.Channels;
-            int bits_per_sample = 32;
+            int bits_per_sample = 16;
             int sample_rate = reader.SampleRate;
 
-            List<float> data = new List<float>();
+            List<short> data = new List<short>();
             float[] buff = new float[num_channels * sample_rate];
 
-            while (reader.ReadSamples(buff, 0, buff.Length) > 0)
-                data.AddRange(buff);
+            while (reader.ReadSamples(buff, 0, buff.Length) is int l && l > 0)
+            {
+                for (int i = 0; i < l; i++)
+                {
+                    var temp = (int)(32767f * buff[i]);
+                    if (temp > short.MaxValue) temp = short.MaxValue;
+                    else if (temp < short.MinValue) temp = short.MinValue;
+                    data.Add((short)temp);
+                }
+            }
 
-            return new Sound<float>(data.ToArray(), num_channels, bits_per_sample, sample_rate);
+            return new Sound<short>(data.ToArray(), num_channels, bits_per_sample, sample_rate);
         }
 
-        internal static Sound<byte> LoadMP3(string file)
+        internal static Sound<short> LoadMP3(string file)
         {
             MpegFile mp3Stream = new MpegFile(file);
             int num_channels = mp3Stream.Channels;
             int bits_per_sample = 16;
             int sample_rate = mp3Stream.SampleRate;
-            List<byte> data = new List<byte>();
-            byte[] buff = new byte[num_channels * sample_rate * bits_per_sample / 8];
 
-            while (mp3Stream.ReadSamples(buff, 0, buff.Length) > 0)
-                data.AddRange(buff);
+            List<short> data = new List<short>();
+            float[] buff = new float[num_channels * sample_rate];
 
-            return new Sound<byte>(data.ToArray(), num_channels, bits_per_sample, sample_rate);
+            while (mp3Stream.ReadSamples(buff, 0, buff.Length) is int l && l > 0)
+            {
+                for (int i = 0; i < l; i++)
+                {
+                    var temp = (int)(32767f * buff[i]);
+                    if (temp > short.MaxValue) temp = short.MaxValue;
+                    else if (temp < short.MinValue) temp = short.MinValue;
+                    data.Add((short)temp);
+                }
+            }
+
+            return new Sound<short>(data.ToArray(), num_channels, bits_per_sample, sample_rate);
         }
 
         internal static Sound<byte> LoadWave(string file)

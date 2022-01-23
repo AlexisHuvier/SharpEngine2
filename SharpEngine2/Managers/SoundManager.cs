@@ -5,32 +5,34 @@ namespace SE2.Managers
 {
     public class SoundManager
     {
-        internal Dictionary<string, Utils.Sound<byte>> soundsBytes;
-        internal Dictionary<string, Utils.Sound<float>> soundsFloat;
+        internal Dictionary<string, Utils.Sound<byte>> wavSounds;
+        internal Dictionary<string, Utils.Sound<short>> oggSounds;
+        internal Dictionary<string, Utils.Sound<short>> mp3Sounds;
 
         public SoundManager()
         {
-            soundsBytes = new Dictionary<string, Utils.Sound<byte>>();
-            soundsFloat = new Dictionary<string, Utils.Sound<float>>();
+            wavSounds = new Dictionary<string, Utils.Sound<byte>>();
+            oggSounds = new Dictionary<string, Utils.Sound<short>>();
+            mp3Sounds = new Dictionary<string, Utils.Sound<short>>();
             Trace.WriteLineIf(Window.DEBUG, "[DEBUG] SoundManager Initialized");
         }
 
         public void AddSound(string name, string file, Utils.SoundType soundType)
         {
-            if (soundsBytes.ContainsKey(name) ||soundsFloat.ContainsKey(name))
+            if (wavSounds.ContainsKey(name) ||oggSounds.ContainsKey(name))
                 Trace.WriteLine($"[WARNING] A sound with this name already exists : {name}");
             else
             {
                 switch(soundType)
                 {
                     case Utils.SoundType.WAV:
-                        soundsBytes.Add(name, Utils.Sound<byte>.LoadWave(file));
+                        wavSounds.Add(name, Utils.Sound<byte>.LoadWave(file));
                         break;
                     case Utils.SoundType.MP3:
-                        soundsBytes.Add(name, Utils.Sound<byte>.LoadMP3(file));
+                        mp3Sounds.Add(name, Utils.Sound<short>.LoadMP3(file));
                         break;
                     case Utils.SoundType.OGG:
-                        soundsFloat.Add(name, Utils.Sound<float>.LoadOGG(file));
+                        oggSounds.Add(name, Utils.Sound<short>.LoadOGG(file));
                         break;
                 }
                 Trace.WriteLineIf(Window.DEBUG, $"[DEBUG] Sound added : {name}");
@@ -39,16 +41,22 @@ namespace SE2.Managers
 
         public void RemoveSound(string name)
         {
-            if (soundsBytes.ContainsKey(name))
+            if (wavSounds.ContainsKey(name))
             {
-                soundsBytes[name].Unload();
-                soundsBytes.Remove(name);
+                wavSounds[name].Unload();
+                wavSounds.Remove(name);
                 Trace.WriteLineIf(Window.DEBUG, $"[DEBUG] Sound removed : {name}");
             }
-            else if (soundsFloat.ContainsKey(name))
+            else if (oggSounds.ContainsKey(name))
             {
-                soundsFloat[name].Unload();
-                soundsFloat.Remove(name);
+                oggSounds[name].Unload();
+                oggSounds.Remove(name);
+                Trace.WriteLineIf(Window.DEBUG, $"[DEBUG] Sound removed : {name}");
+            }
+            else if (mp3Sounds.ContainsKey(name))
+            {
+                mp3Sounds[name].Unload();
+                mp3Sounds.Remove(name);
                 Trace.WriteLineIf(Window.DEBUG, $"[DEBUG] Sound removed : {name}");
             }
             else
@@ -57,25 +65,31 @@ namespace SE2.Managers
 
         public void PlaySound(string name)
         {
-            if (soundsBytes.ContainsKey(name))
-                soundsBytes[name].Play();
-            else if (soundsFloat.ContainsKey(name))
-                soundsFloat[name].Play();
+            if (wavSounds.ContainsKey(name))
+                wavSounds[name].Play();
+            else if (oggSounds.ContainsKey(name))
+                oggSounds[name].Play();
+            else if (mp3Sounds.ContainsKey(name))
+                mp3Sounds[name].Play();
         }
 
         public void StopSound(string name)
         {
-            if (soundsBytes.ContainsKey(name))
-                soundsBytes[name].Stop();
-            else if (soundsFloat.ContainsKey(name))
-                soundsFloat[name].Stop();
+            if (wavSounds.ContainsKey(name))
+                wavSounds[name].Stop();
+            else if (oggSounds.ContainsKey(name))
+                oggSounds[name].Stop();
+            else if (mp3Sounds.ContainsKey(name))
+                mp3Sounds[name].Stop();
         }
 
         internal void Unload()
         {
-            foreach (KeyValuePair<string, Utils.Sound<byte>> sound in soundsBytes)
+            foreach (KeyValuePair<string, Utils.Sound<byte>> sound in wavSounds)
                 sound.Value.Unload();
-            foreach (KeyValuePair<string, Utils.Sound<float>> sound in soundsFloat)
+            foreach (KeyValuePair<string, Utils.Sound<short>> sound in oggSounds)
+                sound.Value.Unload();
+            foreach (KeyValuePair<string, Utils.Sound<short>> sound in mp3Sounds)
                 sound.Value.Unload();
         }
     }

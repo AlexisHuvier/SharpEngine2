@@ -49,6 +49,21 @@ namespace SE2Test
                 e5.GetComponent<SpriteSheetComponent>().flipX = !e5.GetComponent<SpriteSheetComponent>().flipX;
             if (GetWindow().inputManager.IsKeyPressed(Inputs.Key.Y))
                 e5.GetComponent<SpriteSheetComponent>().flipY = !e5.GetComponent<SpriteSheetComponent>().flipY;
+            if (GetWindow().inputManager.IsKeyPressed(Inputs.Key.M))
+            {
+                System.Console.WriteLine("MP3");
+                GetWindow().soundManager.PlaySound("mp3");
+            }
+            if (GetWindow().inputManager.IsKeyPressed(Inputs.Key.O))
+            {
+                System.Console.WriteLine("OGG");
+                GetWindow().soundManager.PlaySound("ogg");
+            }
+            if (GetWindow().inputManager.IsKeyPressed(Inputs.Key.W))
+            {
+                System.Console.WriteLine("WAV");
+                GetWindow().soundManager.PlaySound("wav");
+            }
 
             if (GetWindow().inputManager.IsMouseButtonPressed(Inputs.MouseButton.LEFT))
                 e6.GetComponent<PhysicsComponent>().SetPosition(GetWindow().inputManager.GetMousePosition());
