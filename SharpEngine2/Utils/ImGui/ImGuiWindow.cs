@@ -234,6 +234,20 @@ namespace SE2.Utils
                             ImGui.Separator();
                         }
                     }
+                    else if(c.GetType() == typeof(PolygonComponent))
+                    {
+                        if(ImGui.CollapsingHeader("PolygonComponent"))
+                        {
+                            ImGui.DragInt("Color Red", ref ((PolygonComponent)c).color.internalR, 1f, 0, 255);
+                            ImGui.DragInt("Color Green", ref ((PolygonComponent)c).color.internalG, 1f, 0, 255);
+                            ImGui.DragInt("Color Blue", ref ((PolygonComponent)c).color.internalB, 1f, 0, 255);
+                            ImGui.DragInt("Color Alpha", ref ((PolygonComponent)c).color.internalA, 1f, 0, 255);
+                            ImGui.Separator();
+                            ImGui.InputText("Shader Name", ref ((PolygonComponent)c).shaderName, 40);
+                            ImGui.Checkbox("Displayed", ref ((PolygonComponent)c).displayed);
+                            ImGui.Separator();
+                        }
+                    }
                     else if(c.GetType() == typeof(RectComponent))
                     {
                         if(ImGui.CollapsingHeader("RectComponent"))

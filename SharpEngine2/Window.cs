@@ -157,6 +157,7 @@ namespace SE2
             Graphics.Renderers.TextRenderer.Load();
             Graphics.Renderers.RectRenderer.Load();
             Graphics.Renderers.CircleRenderer.Load();
+            Graphics.Renderers.PolygonRenderer.Load();
             Trace.WriteLineIf(DEBUG, $"[DEBUG] Window loaded");
 
             foreach (Scene w in scenes)
@@ -249,6 +250,7 @@ namespace SE2
             Graphics.Renderers.TextRenderer.Unload();
             Graphics.Renderers.RectRenderer.Unload();
             Graphics.Renderers.CircleRenderer.Unload();
+            Graphics.Renderers.PolygonRenderer.Unload();
             fontManager.Unload();
             shaderManager.Unload();
             soundManager.Unload();
