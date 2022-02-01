@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace SE2.Entities
@@ -9,16 +8,23 @@ namespace SE2.Entities
         internal List<Components.Component> components;
         internal Scene scene;
         public int id;
+        internal List<string> tags;
+
 
         public Entity()
         {
             components = new List<Components.Component>();
+            tags = new List<string>();
             scene = null;
             id = -1;
         }
 
         public virtual void SetScene(Scene w) => scene = w;
         public virtual Scene GetScene() => scene;
+
+        public bool HasTag(string tag) => tags.Contains(tag);
+        public void AddTag(string tag) => tags.Add(tag);
+        public void RemoveTag(string tag) => tags.Remove(tag);
 
         public Window GetWindow()
         {

@@ -4,6 +4,7 @@ using System.Numerics;
 using SE2.Components;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System;
 
 namespace SE2.Utils
 {
@@ -19,6 +20,8 @@ namespace SE2.Utils
         private static string _title;
 
         private static int _currentSelectedEntity = 0;
+        private static string _newTag = "";
+        private static int _currentSelectedTag = 0;
         private static string _newComponent = "";
         private static int _tempRotation = 0;
         private static Vector2 _tempPosition = new Vector2(0);
@@ -160,7 +163,7 @@ namespace SE2.Utils
         internal static void RenderEntityInfo(Window win)
         {
             ImGui.Begin("Entity", ref _showEntity);
-            ImGui.ListBox("",
+            ImGui.ListBox("Entities",
                 ref _currentSelectedEntity,
                 win.scenes[win.currentScene].entities.Select(x => $"Entity (ID : {x.id})").ToArray(),
                 win.scenes[win.currentScene].entities.Count);
@@ -181,6 +184,20 @@ namespace SE2.Utils
 
             if (win.scenes[win.currentScene].entities.Count > 0 && _currentSelectedEntity < win.scenes[win.currentScene].entities.Count)
             {
+                ImGui.ListBox("Tags",
+                    ref _currentSelectedTag,
+                    win.scenes[win.currentScene].entities[_currentSelectedEntity].tags.ToArray(),
+                    win.scenes[win.currentScene].entities[_currentSelectedEntity].tags.Count);
+                ImGui.Separator();
+                ImGui.InputText("Tag :", ref _newTag, 40);
+                if (ImGui.Button("Add Tag"))
+                    win.scenes[win.currentScene].entities[_currentSelectedEntity].AddTag(_newTag);
+                ImGui.BeginDisabled(win.scenes[win.currentScene].entities[_currentSelectedEntity].tags.Count == 0);
+                if (ImGui.Button("Remove Tag"))
+                    win.scenes[win.currentScene].entities[_currentSelectedEntity].RemoveTag(win.scenes[win.currentScene].entities[_currentSelectedEntity].tags[_currentSelectedTag]);
+                ImGui.EndDisabled();
+                ImGui.Separator();
+
                 foreach (Component c in win.scenes[win.currentScene].entities[_currentSelectedEntity].components)
                 {
                     if (c.GetType() == typeof(CircleComponent))
