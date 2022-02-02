@@ -8,7 +8,7 @@ namespace SE2Test
         {
             Window win = new Window(1200, 900, "SharpEngine 2 INCOMING !", true, false);
 
-            win.fontManager.AddFont("basic", "Resources/basic.ttf", 50);
+            win.fontManager.AddFont("basic", "Resources/basic.ttf", 30);
 
             win.soundManager.AddSound("wav", "Resources/tuturu_1.wav", SE2.Utils.SoundType.WAV);
             win.soundManager.AddSound("ogg", "Resources/tuturu_1.ogg", SE2.Utils.SoundType.OGG);
