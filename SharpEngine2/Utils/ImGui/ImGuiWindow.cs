@@ -452,6 +452,22 @@ namespace SE2.Utils
                     ImGui.DragInt("Color Blue", ref ((Widgets.Label)w).color.internalB, 1f, 0, 255);
                     ImGui.DragInt("Color Alpha", ref ((Widgets.Label)w).color.internalA, 1f, 0, 255);
                 }
+                else if(w.GetType() == typeof(Widgets.Button))
+                {
+                    ImGui.InputText("Text", ref ((Widgets.Button)w).text, 40);
+                    ImGui.InputText("Text Shader Name", ref ((Widgets.Button)w).textShaderName, 40);
+                    ImGui.InputText("Font", ref ((Widgets.Button)w).font, 40);
+                    ImGui.DragInt("Font Color Red", ref ((Widgets.Button)w).fontColor.internalR, 1f, 0, 255);
+                    ImGui.DragInt("Font Color Green", ref ((Widgets.Button)w).fontColor.internalG, 1f, 0, 255);
+                    ImGui.DragInt("Font Color Blue", ref ((Widgets.Button)w).fontColor.internalB, 1f, 0, 255);
+                    ImGui.DragInt("Font Color Alpha", ref ((Widgets.Button)w).fontColor.internalA, 1f, 0, 255);
+                    ImGui.Separator();
+                    ImGui.InputText("Background Shader Name", ref ((Widgets.Button)w).buttonShaderName, 40);
+                    ImGui.DragInt("Background Color Red", ref ((Widgets.Button)w).bgColor.internalR, 1f, 0, 255);
+                    ImGui.DragInt("Background Color Green", ref ((Widgets.Button)w).bgColor.internalG, 1f, 0, 255);
+                    ImGui.DragInt("Background Color Blue", ref ((Widgets.Button)w).bgColor.internalB, 1f, 0, 255);
+                    ImGui.DragInt("Background Color Alpha", ref ((Widgets.Button)w).bgColor.internalA, 1f, 0, 255);
+                }
 
                 ImGui.Separator();
             }
