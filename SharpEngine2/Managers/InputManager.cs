@@ -41,8 +41,8 @@ namespace SE2.Managers
         public bool IsMouseButtonPressed(Utils.Inputs.MouseButton input) => !window.MouseState.WasButtonDown(GetMouseButton(input)) && window.MouseState.IsButtonDown(GetMouseButton(input));
         public bool IsMouseButtonReleased(Utils.Inputs.MouseButton input) => window.MouseState.WasButtonDown(GetMouseButton(input)) && !window.MouseState.IsButtonDown(GetMouseButton(input));
 
-        public bool MouseInRectangle(Utils.Vec2 position, Utils.Vec2 size) => window.MouseState.X >= position.x && window.MouseState.X <= position.x + size.x &&
-            window.MouseState.Y >= position.y && window.MouseState.Y <= position.y + size.y;
+        public bool MouseInRectangle(Utils.Vec2 position, Utils.Vec2 size) => window.MouseState.X >= position.x - size.x / 2 && window.MouseState.X <= position.x + size.x / 2 &&
+            window.ClientSize.Y - window.MouseState.Y >= position.y - size.y / 2 && window.ClientSize.Y - window.MouseState.Y <= position.y + size.y / 2;
         public float GetMouseWheelValue() => window.MouseState.ScrollDelta.Y;
         public Utils.Vec2 GetMousePosition() => new Utils.Vec2(window.MouseState.X, window.ClientSize.Y - window.MouseState.Y);
 
