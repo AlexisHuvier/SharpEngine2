@@ -468,6 +468,11 @@ namespace SE2.Utils
                     ImGui.DragInt("Background Color Blue", ref ((Widgets.Button)w).bgColor.internalB, 1f, 0, 255);
                     ImGui.DragInt("Background Color Alpha", ref ((Widgets.Button)w).bgColor.internalA, 1f, 0, 255);
                 }
+                else if(w.GetType() == typeof(Widgets.Checkbox))
+                {
+                    ImGui.Checkbox("Is Checked", ref ((Widgets.Checkbox)w).isChecked);
+                    ImGui.InputText("Shader Name", ref ((Widgets.Checkbox)w).shaderName, 40);
+                }
 
                 ImGui.Separator();
             }
