@@ -8,7 +8,8 @@ namespace SE2Test
     {
         public MyWorld(): base()
         {
-            AddWidget(new Checkbox(new Vec3(200, 200, 0), new Vec3(50, 50, 1)));
+            AddWidget(new Button(new Vec3(200, 200, 0), new Vec3(200, 50, 1), "HEYO", "basic", null));
+            AddWidget(new TexturedButton(new Vec3(200, 400, 0), new Vec3(200, 50, 1), "HEYO", "basic", new string[] { "awesomeface", "container", "container" }, null));
         }
 
         public override void Update(double deltaTime)
