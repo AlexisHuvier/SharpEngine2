@@ -505,6 +505,19 @@ namespace SE2.Utils
                     ImGui.InputText("Normal Texture", ref ((Widgets.TexturedProgressBar)w).textures[0], 40);
                     ImGui.InputText("Background Texture", ref ((Widgets.TexturedProgressBar)w).textures[1], 40);
                 }
+                else if(w.GetType() == typeof(Widgets.LineEdit))
+                {
+                    ImGui.InputText("Text", ref ((Widgets.LineEdit)w).text, 40);
+                    ImGui.InputText("Text Shader Name", ref ((Widgets.LineEdit)w).fontShader, 40);
+                    ImGui.InputText("Font", ref ((Widgets.LineEdit)w).font, 40);
+                    ImGui.DragInt("Font Color Red", ref ((Widgets.LineEdit)w).fontColor.internalR, 1f, 0, 255);
+                    ImGui.DragInt("Font Color Green", ref ((Widgets.LineEdit)w).fontColor.internalG, 1f, 0, 255);
+                    ImGui.DragInt("Font Color Blue", ref ((Widgets.LineEdit)w).fontColor.internalB, 1f, 0, 255);
+                    ImGui.DragInt("Font Color Alpha", ref ((Widgets.LineEdit)w).fontColor.internalA, 1f, 0, 255);
+                    ImGui.Separator();
+                    ImGui.InputText("Shader Name", ref ((Widgets.LineEdit)w).editShader, 40);
+                    ImGui.Text($"Focused : {((Widgets.LineEdit)w).focused}");
+                }
 
                 ImGui.Separator();
             }
