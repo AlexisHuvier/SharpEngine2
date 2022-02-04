@@ -30,9 +30,6 @@ namespace SE2.Widgets
             Matrix4 model = Matrix4.Identity
                 * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(rotation))
                 * Matrix4.CreateTranslation(new Vector3(position.x, position.y, position.z) + GetWindow().camera.Position);
-            GetWindow().shaderManager.GetShader(shaderName).SetMatrix4("model", model);
-            GetWindow().shaderManager.GetShader(shaderName).SetMatrix4("view", GetWindow().camera.GetViewMatrix());
-            GetWindow().shaderManager.GetShader(shaderName).SetMatrix4("projection", GetWindow().camera.GetProjectionMatrix());
 
             Graphics.Renderers.TextRenderer.Render(GetWindow(), text, shaderName, font, scale, position, color, model);
         }
