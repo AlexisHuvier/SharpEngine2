@@ -46,6 +46,9 @@ namespace SE2.Utils
             this.a = a;
         }
 
+        public Color Darker(int factor) => new Color(r + 10 * factor, b + 10 * factor, g + 10 * factor, a);
+        public Color Lighter(int factor) => new Color(r - 10 * factor, b - 10 * factor, g + 10 * factor, a);
+
         public float[] Normalized()
         {
             return new float[] { internalR / 255f, internalG / 255f, internalB / 255f, internalA / 255f };
