@@ -473,6 +473,21 @@ namespace SE2.Utils
                     ImGui.Checkbox("Is Checked", ref ((Widgets.Checkbox)w).isChecked);
                     ImGui.InputText("Shader Name", ref ((Widgets.Checkbox)w).shaderName, 40);
                 }
+                else if(w.GetType() == typeof(Widgets.TexturedButton))
+                {
+                    ImGui.InputText("Text", ref ((Widgets.TexturedButton)w).text, 40);
+                    ImGui.InputText("Text Shader Name", ref ((Widgets.TexturedButton)w).textShaderName, 40);
+                    ImGui.InputText("Font", ref ((Widgets.TexturedButton)w).font, 40);
+                    ImGui.DragInt("Font Color Red", ref ((Widgets.TexturedButton)w).fontColor.internalR, 1f, 0, 255);
+                    ImGui.DragInt("Font Color Green", ref ((Widgets.TexturedButton)w).fontColor.internalG, 1f, 0, 255);
+                    ImGui.DragInt("Font Color Blue", ref ((Widgets.TexturedButton)w).fontColor.internalB, 1f, 0, 255);
+                    ImGui.DragInt("Font Color Alpha", ref ((Widgets.TexturedButton)w).fontColor.internalA, 1f, 0, 255);
+                    ImGui.Separator();
+                    ImGui.InputText("Texture Shader Name", ref ((Widgets.TexturedButton)w).buttonShaderName, 40);
+                    ImGui.InputText("Normal Texture", ref ((Widgets.TexturedButton)w).textures[0], 40);
+                    ImGui.InputText("Hovered Texture", ref ((Widgets.TexturedButton)w).textures[1], 40);
+                    ImGui.InputText("Clicked / Inactive Texture", ref ((Widgets.TexturedButton)w).textures[2], 40);
+                }
 
                 ImGui.Separator();
             }
