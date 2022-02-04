@@ -101,6 +101,18 @@ namespace SE2.Entities
                 comp.Unload();
         }
 
+        public virtual void OnResize(Utils.Vec2 size)
+        {
+            foreach (Components.Component comp in components)
+                comp.OnResize(size);
+        }
+
+        public virtual void OnTextInput(char key)
+        {
+            foreach (Components.Component comp in components)
+                comp.OnTextInput(key);
+        }
+
         public virtual void Update(double deltaTime)
         {
             foreach (Components.Component comp in components)

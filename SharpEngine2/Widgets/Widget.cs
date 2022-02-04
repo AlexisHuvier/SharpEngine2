@@ -33,6 +33,8 @@
         public virtual void Init() { }
         public virtual void Load() { }
         public virtual void Unload() { }
+        public virtual void OnResize(Utils.Vec2 size) { }
+        public virtual void OnTextInput(char key) { }
         public virtual void Update(double deltaTime) { }
         public virtual void Render() { }
     }

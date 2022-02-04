@@ -200,6 +200,7 @@ namespace SE2
             base.OnTextInput(e);
 
             imguiController.PressChar((char)e.Unicode);
+            scenes[currentScene].OnTextInput((char)e.Unicode);
         }
 
         protected override void OnMouseWheel(MouseWheelEventArgs e)
@@ -233,6 +234,7 @@ namespace SE2
 
             GL.Viewport(0, 0, ClientSize.X, ClientSize.Y);
             imguiController.WindowResized(ClientSize.X, ClientSize.Y);
+            scenes[currentScene].OnResize(new Utils.Vec2(e.Size.X, e.Size.Y));
         }
 
         protected override void OnUnload()

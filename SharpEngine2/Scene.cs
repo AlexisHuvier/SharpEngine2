@@ -91,6 +91,24 @@ namespace SE2
                 w.Unload();
         }
 
+        public virtual void OnResize(Utils.Vec2 size)
+        {
+            foreach (Entities.Entity e in entities)
+                e.OnResize(size);
+
+            foreach (Widgets.Widget w in widgets)
+                w.OnResize(size);
+        }
+
+        public virtual void OnTextInput(char key)
+        {
+            foreach (Entities.Entity e in entities)
+                e.OnTextInput(key);
+
+            foreach (Widgets.Widget w in widgets)
+                w.OnTextInput(key);
+        }
+
         public virtual void Update(double deltaTime)
         {
             world.Step((float)deltaTime);
