@@ -95,6 +95,7 @@ namespace SE2.Utils
                     ImGui.Text($"Number of Widgets in Current Scene : {win.scenes[win.currentScene].widgets.Count}");
                     ImGui.Text($"Camera Position : {win.camera.Position}");
                     ImGui.Text($"Camera Following Entity : {win.camera.follow != null}");
+                    ImGui.DragFloat("Camera Zoom", ref win.camera.zoom, 0.1f, -5f, 5f);
                     ImGui.Separator();
                 }
 

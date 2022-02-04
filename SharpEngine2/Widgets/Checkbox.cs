@@ -20,7 +20,7 @@ namespace SE2.Widgets
             if (!active)
                 return;
 
-            if (GetWindow().inputManager.IsMouseButtonPressed(Utils.Inputs.MouseButton.LEFT) && GetWindow().inputManager.MouseInRectangle(new Utils.Vec2(position.x, position.y), new Utils.Vec2(scale.x, scale.y)))
+            if (GetWindow().inputManager.IsMouseButtonPressed(Utils.Inputs.MouseButton.LEFT) && GetWindow().inputManager.MouseInRectangle(new Utils.Vec2(position.x, position.y) * GetWindow().camera.zoom, new Utils.Vec2(scale.x, scale.y) * GetWindow().camera.zoom))
                 isChecked = !isChecked;
         }
 

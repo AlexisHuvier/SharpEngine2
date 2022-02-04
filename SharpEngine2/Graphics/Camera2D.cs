@@ -8,6 +8,7 @@ namespace SE2.Graphics
         private Vector3 _up = Vector3.UnitY;
         private Vector3 _right = Vector3.UnitX;
         public Entities.Entity follow;
+        public float zoom = 1;
 
         public Camera2D(Vector3 position)
         {
@@ -31,6 +32,6 @@ namespace SE2.Graphics
 
 
         public Matrix4 GetViewMatrix() => Matrix4.LookAt(Position, Position - Vector3.UnitZ, _up);
-        public Matrix4 GetProjectionMatrix() => Matrix4.CreateOrthographicOffCenter(0, window.ClientSize.X, 0, window.ClientSize.Y, -1000f, 1000f);
+        public Matrix4 GetProjectionMatrix() => Matrix4.CreateOrthographicOffCenter(0, window.ClientSize.X * 1/zoom, 0, window.ClientSize.Y * 1/zoom, -1000f, 1000f);
     }
 }
