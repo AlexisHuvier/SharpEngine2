@@ -498,6 +498,13 @@ namespace SE2.Utils
                     ImGui.DragInt("Color Alpha", ref ((Widgets.ProgressBar)w).color.internalA, 1f, 0, 255);
 
                 }
+                else if(w.GetType() == typeof(Widgets.TexturedProgressBar))
+                {
+                    ImGui.DragFloat("Value", ref ((Widgets.TexturedProgressBar)w).value, 0.1f, 0, 100);
+                    ImGui.InputText("Shader Name", ref ((Widgets.TexturedProgressBar)w).shaderName, 40);
+                    ImGui.InputText("Normal Texture", ref ((Widgets.TexturedProgressBar)w).textures[0], 40);
+                    ImGui.InputText("Background Texture", ref ((Widgets.TexturedProgressBar)w).textures[1], 40);
+                }
 
                 ImGui.Separator();
             }
