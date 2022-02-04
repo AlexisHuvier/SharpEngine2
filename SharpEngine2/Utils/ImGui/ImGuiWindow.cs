@@ -488,6 +488,16 @@ namespace SE2.Utils
                     ImGui.InputText("Hovered Texture", ref ((Widgets.TexturedButton)w).textures[1], 40);
                     ImGui.InputText("Clicked / Inactive Texture", ref ((Widgets.TexturedButton)w).textures[2], 40);
                 }
+                else if(w.GetType() == typeof(Widgets.ProgressBar))
+                {
+                    ImGui.DragFloat("Value", ref ((Widgets.ProgressBar)w).value, 0.1f, 0, 100);
+                    ImGui.InputText("Shader Name", ref ((Widgets.ProgressBar)w).shaderName, 40);
+                    ImGui.DragInt("Color Red", ref ((Widgets.ProgressBar)w).color.internalR, 1f, 0, 255);
+                    ImGui.DragInt("Color Green", ref ((Widgets.ProgressBar)w).color.internalG, 1f, 0, 255);
+                    ImGui.DragInt("Color Blue", ref ((Widgets.ProgressBar)w).color.internalB, 1f, 0, 255);
+                    ImGui.DragInt("Color Alpha", ref ((Widgets.ProgressBar)w).color.internalA, 1f, 0, 255);
+
+                }
 
                 ImGui.Separator();
             }
