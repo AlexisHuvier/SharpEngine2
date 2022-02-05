@@ -284,6 +284,21 @@ namespace SE2.Utils
                             ImGui.Separator();
                         }
                     }
+                    else if(c.GetType() == typeof(SpriteAnimComponent))
+                    {
+                        if(ImGui.CollapsingHeader("SpriteAnimComponent"))
+                        {
+                            ImGui.DragInt("Time Frame MS", ref ((SpriteAnimComponent)c).timerFrameMS);
+                            ImGui.DragInt("Current Image", ref ((SpriteAnimComponent)c).currentImage);
+                            ImGui.InputText("Shader Name", ref ((SpriteAnimComponent)c).shaderName, 40);
+                            ImGui.Separator();
+                            ImGui.Checkbox("Flip X", ref ((SpriteAnimComponent)c).flipX);
+                            ImGui.Checkbox("Flip Y", ref ((SpriteAnimComponent)c).flipY);
+                            ImGui.Separator();
+                            ImGui.Checkbox("Displayed", ref ((SpriteAnimComponent)c).displayed);
+                            ImGui.Separator();
+                        }
+                    }
                     else if (c.GetType() == typeof(SpriteComponent))
                     {
                         if (ImGui.CollapsingHeader("SpriteComponent"))

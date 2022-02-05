@@ -1,6 +1,8 @@
 ﻿using SE2;
 using SE2.Utils;
 using SE2.Widgets;
+using SE2.Entities;
+using SE2.Components;
 
 namespace SE2Test
 {
@@ -8,6 +10,11 @@ namespace SE2Test
     {
         public MyWorld(): base()
         {
+            Entity e = new Entity();
+            e.AddComponent(new TransformComponent(new Vec3(700, 400), new Vec3(1)));
+            e.AddComponent(new SpriteAnimComponent(new string[] { "awesomeface", "container" }));
+            AddEntity(e);
+
             AddWidget(new Button(new Vec3(200, 200), new Vec3(200, 50), "HEYO", "basic", null));
             AddWidget(new TexturedButton(new Vec3(200, 400), new Vec3(200, 50), "HEYO", "basic", new string[] { "awesomeface", "container", "container" }, null));
             AddWidget(new ProgressBar(new Vec3(200, 600), new Vec3(200, 50), Color.AQUA, 75));
