@@ -15,7 +15,7 @@ namespace SE2.Widgets
             this.shaderName = shaderName;
             this.textures = textures;
 
-            if (textures.Length != 3)
+            if (textures.Length != 2)
                 Trace.WriteLine("[ERROR] TexturedProgressBar must have 2 textures : normal, background.");
         }
 
