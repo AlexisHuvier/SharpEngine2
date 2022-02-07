@@ -3,15 +3,18 @@ using SE2.Utils;
 using SE2.Widgets;
 using SE2.Entities;
 using SE2.Components;
-using System.Collections.Generic;
 
 namespace SE2Test
-{
+{    class Save
+    {
+        public int score;
+    }
+
     class MyWorld: Scene
     {
-        BinarySave save;
+        Save save;
 
-        public MyWorld(): base()
+        public MyWorld() : base()
         {
             Entity e = new Entity();
             e.AddComponent(new TransformComponent(new Vec3(700, 400), new Vec3(1)));
@@ -25,10 +28,11 @@ namespace SE2Test
             AddWidget(new LineEdit(new Vec3(550, 400), new Vec3(300, 50), "Heyo", "basic"));
             AddWidget(new Checkbox(new Vec3(500, 200), new Vec3(50, 50)));
 
-            save = BinarySave.Load("save.se2", new Dictionary<string, object>() {
-                { "score", 1 }
-            });
-            save.Write("save.se2");
+            save = new Save() { score = 0 };
+            if (System.IO.File.Exists("save.json"))
+                save = JsonSave.Read<Save>("save.json");
+            else
+                JsonSave.Save(save, "save.json");
         }
 
         public override void Update(double deltaTime)
@@ -53,16 +57,16 @@ namespace SE2Test
 
             if(GetWindow().inputManager.IsKeyPressed(Inputs.Key.KEYPAD_ADD))
             {
-                save.SetObject("score", save.GetObjectAs<int>("score") + 1);
-                save.Write("save.se2");
+                save.score++;
+                JsonSave.Save(save, "save.json");
             }
             if (GetWindow().inputManager.IsKeyPressed(Inputs.Key.KEYPAD_SUBSTRACT))
             {
-                save.SetObject("score", save.GetObjectAs<int>("score") - 1);
-                save.Write("save.se2");
+                save.score--;
+                JsonSave.Save(save, "save.json");
             }
             if (GetWindow().inputManager.IsKeyPressed(Inputs.Key.KEYPAD_ENTER))
-                System.Diagnostics.Trace.WriteLine($"[INFO] Score : {save.GetObjectAs<int>("score")}");
+                System.Diagnostics.Trace.WriteLine($"[INFO] Score : {save.score}");
 
         }
 
