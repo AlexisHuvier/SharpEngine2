@@ -201,7 +201,19 @@ namespace SE2.Utils
 
                 foreach (Component c in win.scenes[win.currentScene].entities[_currentSelectedEntity].components)
                 {
-                    if (c.GetType() == typeof(CircleComponent))
+                    if(c.GetType() == typeof(AutoMovementComponent))
+                    {
+                        if(ImGui.CollapsingHeader("AutoMovementComponent"))
+                        {
+                            ImGui.DragFloat("Movement X", ref ((AutoMovementComponent)c).movement.x);
+                            ImGui.DragFloat("Movement Y", ref ((AutoMovementComponent)c).movement.y);
+                            ImGui.DragFloat("Movement Z", ref ((AutoMovementComponent)c).movement.z);
+                            ImGui.Separator();
+                            ImGui.DragInt("Rotation", ref ((AutoMovementComponent)c).rotation);
+                            ImGui.Separator();
+                        }
+                    }
+                    else if (c.GetType() == typeof(CircleComponent))
                     {
                         if (ImGui.CollapsingHeader("CircleComponent"))
                         {
