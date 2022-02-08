@@ -13,12 +13,14 @@ namespace SE2Test
     class MyWorld: Scene
     {
         Save save;
+        Lang lang;
 
         public MyWorld() : base()
         {
             Entity e = new Entity();
             e.AddComponent(new TransformComponent(new Vec3(700, 400), new Vec3(1)));
             e.AddComponent(new SpriteAnimComponent(new string[] { "awesomeface", "container" }));
+            e.AddComponent(new AutoMovementComponent(new Vec3(0), 1));
             AddEntity(e);
 
             AddWidget(new Button(new Vec3(200, 200), new Vec3(200, 50), "HEYO", "basic", null));
@@ -33,6 +35,10 @@ namespace SE2Test
                 save = JsonSave.Read<Save>("save.json");
             else
                 JsonSave.Save(save, "save.json");
+
+            lang = new Lang("french.lang");
+            System.Console.WriteLine($"Testing translation : {lang.GetTranslation("test")}");
+            System.Console.WriteLine($"Testing translation with arg : {lang.GetTranslation("test.args", new object[] { "Lyos" })}");
         }
 
         public override void Update(double deltaTime)
