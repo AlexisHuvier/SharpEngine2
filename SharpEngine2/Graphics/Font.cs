@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using OpenTK.Graphics.OpenGL4;
-using SharpFont;
+using FreeTypeSharp;
+using static FreeTypeSharp.Native.FT;
 using System.Diagnostics;
 
 namespace SE2.Graphics
@@ -17,27 +18,29 @@ namespace SE2.Graphics
 
         Dictionary<char, Character> Characters;
 
-        internal Face face;
-
+        internal FreeTypeFaceFacade face;
+        
         public Font(string file, uint size)
         {
             Characters = new Dictionary<char, Character>();
-            face = new Face(Managers.FontManager.lib, file);
-            face.SetPixelSizes(0, size);
+            if (FT_New_Face(Managers.FontManager.lib.Native, file, 0, out System.IntPtr internalface) != FreeTypeSharp.Native.FT_Error.FT_Err_Ok)
+                Trace.WriteLine($"[ERROR] Cannot read font file : {file}");
+            face = new FreeTypeFaceFacade(Managers.FontManager.lib, internalface);
+            FT_Set_Pixel_Sizes(face.Face, 0, size);
 
             GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1);
 
             List<uint> glyphsChecks = new List<uint>();
-            uint cbis = face.GetFirstChar(out uint back);
+            uint cbis = FT_Get_First_Char(face.Face, out uint back);
             glyphsChecks.Add(back);
-            while (face.GetNextChar(cbis, out uint glyphindex) is uint cbos)
+            while (FT_Get_Next_Char(face.Face, cbis, out uint glyphindex) is uint cbos)
             {
                 cbis = cbos;
-                face.LoadChar(System.Convert.ToChar(cbis), LoadFlags.Render, LoadTarget.Normal);
+                FT_Load_Char(face.Face, System.Convert.ToChar(cbis), FT_LOAD_RENDER);
 
                 int texture = GL.GenTexture();
                 GL.BindTexture(TextureTarget.Texture2D, texture);
-                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.CompressedRed, face.Glyph.Bitmap.Width, face.Glyph.Bitmap.Rows, 0, PixelFormat.Red, PixelType.UnsignedByte, face.Glyph.Bitmap.Buffer);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.CompressedRed, (int)face.GlyphBitmap.width, (int)face.GlyphBitmap.rows, 0, PixelFormat.Red, PixelType.UnsignedByte, face.GlyphBitmap.buffer);
 
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMinFilter.Linear);
@@ -47,9 +50,9 @@ namespace SE2.Graphics
 
                 Character character = new Character() {
                     TextureID = texture,
-                    Size = new Utils.Vec2(face.Glyph.Bitmap.Width, face.Glyph.Bitmap.Rows),
-                    Bearing = new Utils.Vec2(face.Glyph.BitmapLeft, face.Glyph.BitmapTop),
-                    Advance = (int)face.Glyph.Advance.X
+                    Size = new Utils.Vec2(face.GlyphBitmap.width, face.GlyphBitmap.rows),
+                    Bearing = new Utils.Vec2(face.GlyphBitmapLeft, face.GlyphBitmapTop),
+                    Advance = face.GlyphMetricHorizontalAdvance
                 };
                 Characters.Add(System.Convert.ToChar(cbis), character);
                 if (glyphsChecks.Contains(glyphindex))
@@ -72,11 +75,6 @@ namespace SE2.Graphics
             }
 
             return c;
-        }
-
-        internal void Unload()
-        {
-            face.Dispose();
         }
     }
 }

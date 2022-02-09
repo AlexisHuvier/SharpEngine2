@@ -253,7 +253,6 @@ namespace SE2
             Graphics.Renderers.RectRenderer.Unload();
             Graphics.Renderers.CircleRenderer.Unload();
             Graphics.Renderers.PolygonRenderer.Unload();
-            fontManager.Unload();
             shaderManager.Unload();
             soundManager.Unload();
             textureManager.Unload();

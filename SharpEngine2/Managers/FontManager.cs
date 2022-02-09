@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
-using SharpFont;
+using FreeTypeSharp;
 
 namespace SE2.Managers
 {
     public class FontManager
     {
-        internal static Library lib = new Library();
+        internal static FreeTypeLibrary lib = new FreeTypeLibrary();
 
         private Dictionary<string, Graphics.Font> fonts;
 
@@ -31,7 +31,6 @@ namespace SE2.Managers
         {
             if (fonts.ContainsKey(name))
             {
-                fonts[name].Unload();
                 fonts.Remove(name);
                 Trace.WriteLineIf(Window.DEBUG, $"[DEBUG] Font removed : {name}");
             }
@@ -44,11 +43,6 @@ namespace SE2.Managers
             if (fonts.ContainsKey(name))
                 return fonts[name];
             return null;
-        }
-        internal void Unload()
-        {
-            foreach (KeyValuePair<string, Graphics.Font> font in fonts)
-                font.Value.Unload();
         }
     }
 }
