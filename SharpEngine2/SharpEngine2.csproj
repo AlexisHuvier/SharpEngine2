@@ -7,6 +7,9 @@
     <ApplicationIcon />
     <StartupObject />
     <Authors>Alexis Huvier, Lycos Novation</Authors>
+    <Description>C# Game Engine based on OpenTK</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
