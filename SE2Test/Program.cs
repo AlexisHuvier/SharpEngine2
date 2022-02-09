@@ -6,7 +6,7 @@ namespace SE2Test
     {
         static void Main(string[] args)
         {
-            Window win = new Window(1200, 900, "SharpEngine 2 INCOMING !", true, false);
+            Window win = new Window(1200, 900, "SharpEngine 2 INCOMING !", true, true);
 
             win.fontManager.AddFont("basic", "Resources/basic.ttf", 30);
 

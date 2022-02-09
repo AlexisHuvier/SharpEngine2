@@ -39,6 +39,8 @@ namespace SE2
         {
             if (!vsync)
                 VSync = VSyncMode.Off;
+            else
+                VSync = VSyncMode.On;
 
             DEBUG = debug;
 
