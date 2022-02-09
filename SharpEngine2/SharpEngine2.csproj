@@ -6,6 +6,7 @@
     <RootNamespace>SE2</RootNamespace>
     <ApplicationIcon />
     <StartupObject />
+    <Authors>Alexis Huvier, Lycos Novation</Authors>
   </PropertyGroup>
 
   <ItemGroup>
