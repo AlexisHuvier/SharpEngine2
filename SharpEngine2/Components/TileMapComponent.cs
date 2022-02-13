@@ -29,12 +29,14 @@ namespace SE2.Components
         protected List<Tile> tiles;
         protected List<Layer> layers;
         protected List<string> textures;
+        protected bool useTilesets;
         public bool displayed;
 
         public TileMapComponent(string tilemap, string shadername = "sprite", bool displayed = true): base()
         {
             this.displayed = displayed;
 
+            useTilesets = false;
             tiles = new List<Tile>();
             layers = new List<Layer>();
             textures = new List<string>();
@@ -62,14 +64,32 @@ namespace SE2.Components
                 throw new Exception("[ERROR] SharpEngine2 can only use non-infinite tilemap.");
             }
 
-            foreach(XElement tiletype in file.Element("tileset").Elements("tile"))
+            if (new List<XElement>(file.Element("tileset").Elements("tile")).Count > 0)
             {
-                textures.Add(Path.GetDirectoryName(tilemap) + Path.DirectorySeparatorChar + tiletype.Element("image").Attribute("source").Value);
-                tiles.Add(new Tile() {
-                    id = Convert.ToInt32(tiletype.Attribute("id").Value) + 1,
-                    source = Path.GetFileNameWithoutExtension(Path.GetDirectoryName(tilemap) + Path.DirectorySeparatorChar + tiletype.Element("image").Attribute("source").Value),
-                    shaderName = shadername
-                });
+                foreach (XElement tiletype in file.Element("tileset").Elements("tile"))
+                {
+                    textures.Add(Path.GetDirectoryName(tilemap) + Path.DirectorySeparatorChar + tiletype.Element("image").Attribute("source").Value);
+                    tiles.Add(new Tile()
+                    {
+                        id = Convert.ToInt32(tiletype.Attribute("id").Value) + 1,
+                        source = Path.GetFileNameWithoutExtension(Path.GetDirectoryName(tilemap) + Path.DirectorySeparatorChar + tiletype.Element("image").Attribute("source").Value),
+                        shaderName = shadername
+                    });
+                }
+            }
+            else if(file.Element("tileset").Element("image") != null)
+            {
+                useTilesets = true;
+                textures.Add(Path.GetDirectoryName(tilemap) + Path.DirectorySeparatorChar + file.Element("tileset").Element("image").Attribute("source").Value);
+                for(int i = 1; i <= Convert.ToInt32(file.Element("tileset").Attribute("tilecount").Value); i++)
+                {
+                    tiles.Add(new Tile()
+                    {
+                        id = i,
+                        source = Path.GetFileNameWithoutExtension(Path.GetDirectoryName(tilemap) + Path.DirectorySeparatorChar + file.Element("tileset").Element("image").Attribute("source").Value),
+                        shaderName = shadername
+                    });
+                }
             }
 
             foreach(XElement element in file.Elements("layer"))
@@ -104,7 +124,12 @@ namespace SE2.Components
                 GetWindow().textureManager.AddTexture(Path.GetFileNameWithoutExtension(texture), texture);
 
             foreach (Tile tile in tiles)
-                Graphics.Renderers.SpriteRenderer.Load(GetWindow(), tile.shaderName, tile.source);
+            {
+                if (useTilesets)
+                    Graphics.Renderers.SpriteSheetRenderer.Load(GetWindow(), tile.shaderName, tile.source);
+                else
+                    Graphics.Renderers.SpriteRenderer.Load(GetWindow(), tile.shaderName, tile.source);
+            }
         }
 
         public override void Render()
@@ -132,7 +157,10 @@ namespace SE2.Components
                                     * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(tc.rotation))
                                     * Matrix4.CreateTranslation(new Vector3(tc.position.x + offset.x, tc.position.y + offset.y, tc.position.z));
 
-                                Graphics.Renderers.SpriteRenderer.Render(GetWindow(), GetTile(layer.tiles[i]).shaderName, GetTile(layer.tiles[i]).source, false, false, model);
+                                if (useTilesets)
+                                    Graphics.Renderers.SpriteSheetRenderer.Render(GetWindow(), GetTile(layer.tiles[i]).shaderName, GetTile(layer.tiles[i]).source, GetTile(layer.tiles[i]).id - 1, tileSize, false, false, model);
+                                else
+                                    Graphics.Renderers.SpriteRenderer.Render(GetWindow(), GetTile(layer.tiles[i]).shaderName, GetTile(layer.tiles[i]).source, false, false, model);
                             }
                         }
                     }
