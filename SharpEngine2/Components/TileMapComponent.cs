@@ -127,7 +127,7 @@ namespace SE2.Components
                                 Utils.Vec2 offset = new Utils.Vec2(-tileSize.x * size.x * tc.scale.x / 2, tileSize.y * size.y * tc.scale.y / 2) + new Utils.Vec2(tileSize.x * tc.scale.x * Convert.ToInt32(i % Convert.ToInt32(size.x)), -tileSize.y * tc.scale.y * Convert.ToInt32(i / Convert.ToInt32(size.y)));
 
                                 Matrix4 model = Matrix4.Identity
-                                    * Matrix4.CreateScale(GetWindow().textureManager.GetTexture(GetTile(layer.tiles[i]).source).size.X / 2, GetWindow().textureManager.GetTexture(GetTile(layer.tiles[i]).source).size.Y / 2, 1)
+                                    * Matrix4.CreateScale(tileSize.x / 2, tileSize.y / 2, 1)
                                     * Matrix4.CreateScale(tc.scale.x, tc.scale.y, 1)
                                     * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(tc.rotation))
                                     * Matrix4.CreateTranslation(new Vector3(tc.position.x + offset.x, tc.position.y + offset.y, tc.position.z));
