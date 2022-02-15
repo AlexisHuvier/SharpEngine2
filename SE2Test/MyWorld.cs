@@ -33,20 +33,17 @@ namespace SE2Test
             base.Update(deltaTime);
 
             if (GetWindow().inputManager.IsKeyPressed(Inputs.Key.M))
-            {
-                System.Console.WriteLine("MP3");
                 GetWindow().soundManager.PlaySound("mp3");
-            }
+            if (GetWindow().inputManager.IsKeyPressed(Inputs.Key.P))
+                GetWindow().soundManager.PauseSound("mp3");
+            if (GetWindow().inputManager.IsKeyPressed(Inputs.Key.S))
+                System.Console.WriteLine(GetWindow().soundManager.GetState("mp3"));
             if (GetWindow().inputManager.IsKeyPressed(Inputs.Key.O))
-            {
-                System.Console.WriteLine("OGG");
                 GetWindow().soundManager.PlaySound("ogg");
-            }
+            if (GetWindow().inputManager.IsKeyPressed(Inputs.Key.E))
+                GetWindow().soundManager.StopSound("ogg");
             if (GetWindow().inputManager.IsKeyPressed(Inputs.Key.W))
-            {
-                System.Console.WriteLine("WAV");
                 GetWindow().soundManager.PlaySound("wav");
-            }
 
         }
 

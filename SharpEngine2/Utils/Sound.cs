@@ -13,6 +13,16 @@ namespace SE2.Utils
         WAV,
         MP3
     }
+
+    public enum SoundState
+    {
+        Unknown,
+        Initial = 4113,
+        Playing = 4114,
+        Paused = 4115,
+        Stopped = 4116
+    }
+
     internal class Sound<T> where T: unmanaged
     {
         public T[] data;
@@ -42,6 +52,24 @@ namespace SE2.Utils
         {
             AL.SourcePlay(source);
         }
+
+        public void Pause()
+        {
+            AL.SourcePause(source);
+        }
+
+        public void SetLooping(bool loop)
+        {
+            AL.Source(source, ALSourceb.Looping, loop);
+        }
+
+        public bool GetLooping()
+        {
+            AL.GetSource(source, ALSourceb.Looping, out bool loop);
+            return loop;
+        }
+
+        public SoundState GetState() => (SoundState)AL.GetSourceState(source);
 
         public void Stop()
         {

@@ -11,7 +11,7 @@ namespace SE2Test
             win.fontManager.AddFont("basic", "Resources/basic.ttf", 30);
 
             win.soundManager.AddSound("wav", "Resources/tuturu_1.wav", SE2.Utils.SoundType.WAV);
-            win.soundManager.AddSound("ogg", "Resources/tuturu_1.ogg", SE2.Utils.SoundType.OGG);
+            win.soundManager.AddSound("ogg", "Resources/tuturu_1.ogg", SE2.Utils.SoundType.OGG, true);
             win.soundManager.AddSound("mp3", "Resources/music.mp3", SE2.Utils.SoundType.MP3);
 
             win.textureManager.AddTexture("container", "Resources/container.png");
