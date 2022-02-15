@@ -57,8 +57,12 @@ namespace SE2.Components
             else
                 Trace.WriteLine($"[ERROR] Unknown body type : {type}");
 
+#pragma warning disable CS0612 // 'Body.SetRestitution(float)' est obsolète
             body.SetRestitution(restitution);
+#pragma warning restore CS0612 // 'Body.SetRestitution(float)' est obsolète
+#pragma warning disable CS0612 // 'Body.SetFriction(float)' est obsolète
             body.SetFriction(friction);
+#pragma warning restore CS0612 // 'Body.SetFriction(float)' est obsolète
 
             foreach (Entities.Entity e in entities)
             {
