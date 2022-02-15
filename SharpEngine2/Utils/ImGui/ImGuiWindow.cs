@@ -302,6 +302,7 @@ namespace SE2.Utils
                         {
                             ImGui.DragInt("Time Frame MS", ref ((SpriteAnimComponent)c).timerFrameMS);
                             ImGui.DragInt("Current Image", ref ((SpriteAnimComponent)c).currentImage);
+                            ImGui.InputText("Current Anim", ref ((SpriteAnimComponent)c).currentAnim, 40);
                             ImGui.InputText("Shader Name", ref ((SpriteAnimComponent)c).shaderName, 40);
                             ImGui.Separator();
                             ImGui.Checkbox("Flip X", ref ((SpriteAnimComponent)c).flipX);

@@ -1,10 +1,11 @@
 ﻿using OpenTK.Mathematics;
+using System.Collections.Generic;
 
 namespace SE2.Components
 {
     public class SpriteAnimComponent : Component
     {
-        public string[] textures;
+        public Dictionary<string, List<string>> textures;
         public bool displayed;
         public string shaderName;
         public int timerFrameMS;
@@ -13,22 +14,33 @@ namespace SE2.Components
         public bool flipX;
         public bool flipY;
 
+        internal string currentAnim;
         private float internalTimer;
 
-        public SpriteAnimComponent(string[] textures, int currentImage = 0, int timerFrameMS = 250, string shaderName = "sprite", bool displayed = true) : base()
+        public SpriteAnimComponent(Dictionary<string, List<string>> textures, string currentAnim, int timerFrameMS = 250, string shaderName = "sprite", bool displayed = true) : base()
         {
             this.textures = textures;
             this.shaderName = shaderName;
             this.displayed = displayed;
             this.timerFrameMS = timerFrameMS;
-            this.currentImage = currentImage;
+            this.currentImage = 0;
+            this.currentAnim = currentAnim;
         }
+
+        public void SetAnim(string anim)
+        {
+            currentAnim = anim;
+            currentImage = 0;
+            internalTimer = timerFrameMS;
+        }
+
+        public string GetAnim() => currentAnim;
 
         public override void Load()
         {
             base.Load();
 
-            foreach(string texture in textures)
+            foreach(string texture in textures[currentAnim])
                 Graphics.Renderers.SpriteRenderer.Load(GetWindow(), shaderName, texture);
         }
 
@@ -36,11 +48,11 @@ namespace SE2.Components
         {
             base.Update(deltaTime);
 
-            if (textures.Length > currentImage)
+            if (textures[currentAnim].Count > currentImage)
             {
                 if (internalTimer <= 0)
                 {
-                    if (currentImage >= textures.Length - 1)
+                    if (currentImage >= textures[currentAnim].Count - 1)
                         currentImage = 0;
                     else
                         currentImage++;
@@ -54,7 +66,7 @@ namespace SE2.Components
         {
             base.Render();
 
-            if (!displayed || GetWindow().shaderManager.GetShader(shaderName) == null || textures.Length == 0 || GetWindow().textureManager.GetTexture(textures[currentImage]) == null)
+            if (!displayed || GetWindow().shaderManager.GetShader(shaderName) == null || textures[currentAnim].Count == 0 || GetWindow().textureManager.GetTexture(textures[currentAnim][currentImage]) == null)
                 return;
 
 
@@ -63,12 +75,12 @@ namespace SE2.Components
                 if (e.GetComponent<TransformComponent>() is TransformComponent tc)
                 {
                     Matrix4 model = Matrix4.Identity
-                        * Matrix4.CreateScale(GetWindow().textureManager.GetTexture(textures[currentImage]).size.X / 2, GetWindow().textureManager.GetTexture(textures[currentImage]).size.Y / 2, 1)
+                        * Matrix4.CreateScale(GetWindow().textureManager.GetTexture(textures[currentAnim][currentImage]).size.X / 2, GetWindow().textureManager.GetTexture(textures[currentAnim][currentImage]).size.Y / 2, 1)
                         * Matrix4.CreateScale(tc.scale.x, tc.scale.y, tc.scale.z)
                         * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(tc.rotation))
                         * Matrix4.CreateTranslation(new Vector3(tc.position.x, tc.position.y, tc.position.z));
 
-                    Graphics.Renderers.SpriteRenderer.Render(GetWindow(), shaderName, textures[currentImage], flipX, flipY, model);
+                    Graphics.Renderers.SpriteRenderer.Render(GetWindow(), shaderName, textures[currentAnim][currentImage], flipX, flipY, model);
                 }
             }
         }
