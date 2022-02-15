@@ -178,7 +178,7 @@ namespace SE2
 
             imguiController.Update(this, (float)args.Time);
 
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 
             if (currentScene != -1)
                 scenes[currentScene].Render();
