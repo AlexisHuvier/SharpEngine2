@@ -23,9 +23,11 @@ namespace SE2.Graphics.Renderers
         private static int _vertexBufferObject;
         private static int _vertexArrayObject;
         private static int _elementBufferObject;
+        private static Utils.Color oldColor;
 
         private static void UpdateVertices(Utils.Color color)
         {
+            oldColor = color;
             float[] normalizedColor = color.Normalized();
             _vertices = new float[]
             {
@@ -66,7 +68,8 @@ namespace SE2.Graphics.Renderers
 
         public static void Render(Window win, string shader, Utils.Color color, Matrix4 model)
         {
-            UpdateVertices(color);
+            if(oldColor != color)
+                UpdateVertices(color);
 
             GL.BindVertexArray(_vertexArrayObject);
 

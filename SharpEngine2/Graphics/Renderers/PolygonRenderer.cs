@@ -24,9 +24,13 @@ namespace SE2.Graphics.Renderers
         private static int _vertexBufferObject;
         private static int _vertexArrayObject;
         private static int _elementBufferObject;
+        private static float[] oldVertices;
+        private static Utils.Color oldColor;
 
         private static void UpdateVertices(float[] vertices, Utils.Color color)
         {
+            oldVertices = vertices;
+            oldColor = color;
             uint lenPoints = (uint)vertices.Length / 3;
 
             float[] normalizedColor = color.Normalized();
@@ -87,7 +91,8 @@ namespace SE2.Graphics.Renderers
 
         public static void Render(Window win, string shader, float[] vertices, Utils.Color color, Matrix4 model)
         {
-            UpdateVertices(vertices, color);
+            if(oldVertices != vertices || oldColor != color)
+                UpdateVertices(vertices, color);
 
             GL.BindVertexArray(_vertexArrayObject);
 

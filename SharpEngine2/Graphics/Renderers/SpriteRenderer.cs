@@ -23,9 +23,14 @@ namespace SE2.Graphics.Renderers
         private static int _vertexBufferObject;
         private static int _vertexArrayObject;
         private static int _elementBufferObject;
+        private static bool oldFlipX;
+        private static bool oldFlipY;
 
         private static void UpdateVertices(bool flipX, bool flipY)
         {
+            oldFlipX = flipX;
+            oldFlipY = flipY;
+
             if (flipX && flipY)
             {
                 _vertices = new float[]
@@ -109,7 +114,8 @@ namespace SE2.Graphics.Renderers
 
         public static void Render(Window win, string shader, string texture, bool flipX, bool flipY, Matrix4 model)
         {
-            UpdateVertices(flipX, flipY);
+            if(oldFlipX != flipX || oldFlipY != flipY)
+                UpdateVertices(flipX, flipY);
 
             GL.BindVertexArray(_vertexArrayObject);
 

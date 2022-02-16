@@ -18,9 +18,13 @@ namespace SE2.Graphics.Renderers
 
         private static int _vertexBufferObject;
         private static int _vertexArrayObject;
+        private static int oldNbSegment;
+        private static Utils.Color oldColor;
 
         private static void UpdateVertices(int nbSegment, Utils.Color color)
         {
+            oldColor = color;
+            oldNbSegment = nbSegment;
             float[] normalizedColor = color.Normalized();
             _vertices.Clear();
             for(int i= 0; i < nbSegment; i++)
@@ -57,7 +61,8 @@ namespace SE2.Graphics.Renderers
 
         public static void Render(Window win, string shader, int numberSegment, Utils.Color color, Matrix4 model)
         {
-            UpdateVertices(numberSegment, color);
+            if(oldNbSegment != numberSegment || oldColor != color)
+                UpdateVertices(numberSegment, color);
 
             GL.BindVertexArray(_vertexArrayObject);
 
