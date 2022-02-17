@@ -66,7 +66,7 @@ namespace SE2.Graphics.Renderers
             GL.VertexAttribPointer(1, 4, VertexAttribPointerType.Float, false, 7 * sizeof(float), 3 * sizeof(float));
         }
 
-        public static void Render(Window win, string shader, Utils.Color color, Matrix4 model)
+        public static void Render(Window win, string shader, Utils.Color color, float alpha, Matrix4 model)
         {
             if(oldColor != color)
                 UpdateVertices(color);
@@ -78,6 +78,7 @@ namespace SE2.Graphics.Renderers
             win.shaderManager.GetShader(shader).SetMatrix4("model", model);
             win.shaderManager.GetShader(shader).SetMatrix4("view", win.camera.GetViewMatrix());
             win.shaderManager.GetShader(shader).SetMatrix4("projection", win.camera.GetProjectionMatrix());
+            win.shaderManager.GetShader(shader).SetFloat("alpha", alpha);
 
             GL.DrawElements(PrimitiveType.Triangles, _indices.Length, DrawElementsType.UnsignedInt, 0);
         }

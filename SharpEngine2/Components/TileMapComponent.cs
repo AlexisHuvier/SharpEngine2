@@ -31,10 +31,12 @@ namespace SE2.Components
         protected List<string> textures;
         protected bool useTilesets;
         public bool displayed;
+        public float opacity;
 
-        public TileMapComponent(string tilemap, string shadername = "sprite", bool displayed = true): base()
+        public TileMapComponent(string tilemap, float opacity = 1f, string shadername = "sprite", bool displayed = true): base()
         {
             this.displayed = displayed;
+            this.opacity = opacity;
 
             useTilesets = false;
             tiles = new List<Tile>();
@@ -158,9 +160,9 @@ namespace SE2.Components
                                     * Matrix4.CreateTranslation(new Vector3(tc.position.x + offset.x, tc.position.y + offset.y, tc.position.z));
 
                                 if (useTilesets)
-                                    Graphics.Renderers.SpriteSheetRenderer.Render(GetWindow(), GetTile(layer.tiles[i]).shaderName, GetTile(layer.tiles[i]).source, GetTile(layer.tiles[i]).id - 1, tileSize, false, false, model);
+                                    Graphics.Renderers.SpriteSheetRenderer.Render(GetWindow(), GetTile(layer.tiles[i]).shaderName, GetTile(layer.tiles[i]).source, GetTile(layer.tiles[i]).id - 1, tileSize, false, false, opacity, model);
                                 else
-                                    Graphics.Renderers.SpriteRenderer.Render(GetWindow(), GetTile(layer.tiles[i]).shaderName, GetTile(layer.tiles[i]).source, false, false, model);
+                                    Graphics.Renderers.SpriteRenderer.Render(GetWindow(), GetTile(layer.tiles[i]).shaderName, GetTile(layer.tiles[i]).source, false, false, opacity, model);
                             }
                         }
                     }

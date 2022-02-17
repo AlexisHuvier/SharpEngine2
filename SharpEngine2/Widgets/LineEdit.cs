@@ -62,7 +62,7 @@ namespace SE2.Widgets
                         * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(rotation))
                         * Matrix4.CreateTranslation(new Vector3(position.x, position.y, position.z) + GetWindow().camera.Position);
 
-            Graphics.Renderers.TextRenderer.Render(GetWindow(), text, fontShader, font, new Utils.Vec3(1), position, fontColor, fontModel);
+            Graphics.Renderers.TextRenderer.Render(GetWindow(), text, fontShader, font, new Utils.Vec3(1), position, fontColor, 1f, fontModel);
 
             Matrix4 blackBGModel = Matrix4.Identity
                         * Matrix4.CreateScale(scale.x / 2, scale.y / 2, scale.z / 2)
@@ -77,10 +77,10 @@ namespace SE2.Widgets
                         * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(rotation))
                         * Matrix4.CreateTranslation(new Vector3(position.x, position.y, position.z) + GetWindow().camera.Position);
 
-            Graphics.Renderers.RectRenderer.Render(GetWindow(), editShader, Utils.Color.WHITE, bgModel);
-            Graphics.Renderers.RectRenderer.Render(GetWindow(), editShader, Utils.Color.BLACK, blackBGModel);
+            Graphics.Renderers.RectRenderer.Render(GetWindow(), editShader, Utils.Color.WHITE, 1f, bgModel);
+            Graphics.Renderers.RectRenderer.Render(GetWindow(), editShader, Utils.Color.BLACK, 1f, blackBGModel);
             if(focused)
-                Graphics.Renderers.RectRenderer.Render(GetWindow(), editShader, Utils.Color.WHITE, whiteBgModel);
+                Graphics.Renderers.RectRenderer.Render(GetWindow(), editShader, Utils.Color.WHITE, 1f, whiteBgModel);
         }
     }
 }

@@ -8,13 +8,15 @@ namespace SE2.Components
         public string shaderName;
         public Utils.Color color;
         public Utils.Vec3 size;
+        public float opacity;
 
-        public RectComponent(Utils.Vec3 size, Utils.Color color, string shaderName = "shape", bool displayed = true) : base()
+        public RectComponent(Utils.Vec3 size, Utils.Color color, float opacity = 1f, string shaderName = "shape", bool displayed = true) : base()
         {
             this.size = size;
             this.color = color;
             this.shaderName = shaderName;
             this.displayed = displayed;
+            this.opacity = opacity;
         }
 
         public override void Render()
@@ -34,7 +36,7 @@ namespace SE2.Components
                         * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(tc.rotation))
                         * Matrix4.CreateTranslation(new Vector3(tc.position.x, tc.position.y, tc.position.z));
 
-                    Graphics.Renderers.RectRenderer.Render(GetWindow(), shaderName, color, model);
+                    Graphics.Renderers.RectRenderer.Render(GetWindow(), shaderName, color, opacity, model);
                 }
             }
         }

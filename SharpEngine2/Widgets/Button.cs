@@ -70,7 +70,7 @@ namespace SE2.Widgets
                         * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(rotation))
                         * Matrix4.CreateTranslation(new Vector3(position.x, position.y, position.z) + GetWindow().camera.Position);
 
-            Graphics.Renderers.TextRenderer.Render(GetWindow(), text, textShaderName, font, new Utils.Vec3(1), position, fontColor, fontModel);
+            Graphics.Renderers.TextRenderer.Render(GetWindow(), text, textShaderName, font, new Utils.Vec3(1), position, fontColor, 1f, fontModel);
 
             if (state == ButtonState.CLICK || !active)
             {
@@ -79,7 +79,7 @@ namespace SE2.Widgets
                             * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(rotation))
                             * Matrix4.CreateTranslation(new Vector3(position.x, position.y, position.z));
 
-                Graphics.Renderers.RectRenderer.Render(GetWindow(), buttonShaderName, new Utils.Color(0, 0, 0, 128), hoverBGModel);
+                Graphics.Renderers.RectRenderer.Render(GetWindow(), buttonShaderName, new Utils.Color(0, 0, 0, 128), 1f, hoverBGModel);
             }
 
             Matrix4 blackBGModel = Matrix4.Identity
@@ -91,8 +91,8 @@ namespace SE2.Widgets
                         * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(rotation))
                         * Matrix4.CreateTranslation(new Vector3(position.x, position.y, position.z) + GetWindow().camera.Position);
 
-            Graphics.Renderers.RectRenderer.Render(GetWindow(), buttonShaderName, bgColor, bgModel);
-            Graphics.Renderers.RectRenderer.Render(GetWindow(), buttonShaderName, Utils.Color.BLACK, blackBGModel);
+            Graphics.Renderers.RectRenderer.Render(GetWindow(), buttonShaderName, bgColor, 1f, bgModel);
+            Graphics.Renderers.RectRenderer.Render(GetWindow(), buttonShaderName, Utils.Color.BLACK, 1f, blackBGModel);
 
             if (state == ButtonState.HOVERED && active)
             {
@@ -101,7 +101,7 @@ namespace SE2.Widgets
                             * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(rotation))
                             * Matrix4.CreateTranslation(new Vector3(position.x, position.y, position.z));
 
-                Graphics.Renderers.RectRenderer.Render(GetWindow(), buttonShaderName, Utils.Color.WHITE, hoverBGModel);
+                Graphics.Renderers.RectRenderer.Render(GetWindow(), buttonShaderName, Utils.Color.WHITE, 1f, hoverBGModel);
             }
         }
     }

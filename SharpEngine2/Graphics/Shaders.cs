@@ -32,9 +32,12 @@ void main(void)
 out vec4 outputColor;
 in vec4 color;
 
+uniform float alpha;
+
 void main()
 {
     outputColor = color;
+    outputColor.a *= alpha;
 }";
         }
 
@@ -69,10 +72,12 @@ out vec4 outputColor;
 in vec2 texCoord;
 
 uniform sampler2D texture0;
+uniform float alpha;
 
 void main()
 {
     outputColor = texture(texture0, texCoord);
+    outputColor.a *= alpha;
     if (outputColor.a == 0) {
         discard;
     }
@@ -108,11 +113,13 @@ out vec4 color;
 
 uniform sampler2D text;
 uniform vec3 textColor;
+uniform float alpha;
 
 void main()
 {    
     vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, TexCoords).r);
     color = vec4(textColor, 1.0) * sampled;
+    color.a *= alpha;
     if (color.a == 0) {
         discard;
     }

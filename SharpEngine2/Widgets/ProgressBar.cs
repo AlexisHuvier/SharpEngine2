@@ -33,8 +33,8 @@ namespace SE2.Widgets
                         * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(rotation))
                         * Matrix4.CreateTranslation(new Vector3(position.x - scale.x / 2 + (scale.x * (value / 100) / 2), position.y, position.z) + GetWindow().camera.Position);
 
-            Graphics.Renderers.RectRenderer.Render(GetWindow(), shaderName, color, bgModel);
-            Graphics.Renderers.RectRenderer.Render(GetWindow(), shaderName, Utils.Color.BLACK, blackBGModel);
+            Graphics.Renderers.RectRenderer.Render(GetWindow(), shaderName, color, 1f, bgModel);
+            Graphics.Renderers.RectRenderer.Render(GetWindow(), shaderName, Utils.Color.BLACK, 1f, blackBGModel);
         }
     }
 }

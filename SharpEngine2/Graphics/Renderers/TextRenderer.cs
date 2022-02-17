@@ -25,7 +25,7 @@ namespace SE2.Graphics.Renderers
             GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 5 * sizeof(float), 3 * sizeof(float));
         }
 
-        public static void Render(Window win, string text, string shader, string font, Utils.Vec3 scale, Utils.Vec3 position, Utils.Color color, Matrix4 model)
+        public static void Render(Window win, string text, string shader, string font, Utils.Vec3 scale, Utils.Vec3 position, Utils.Color color, float alpha, Matrix4 model)
         {
 
             GL.BindVertexArray(_vertexArrayObject);
@@ -36,6 +36,7 @@ namespace SE2.Graphics.Renderers
             win.shaderManager.GetShader(shader).SetMatrix4("model", model);
             win.shaderManager.GetShader(shader).SetMatrix4("view", win.camera.GetViewMatrix());
             win.shaderManager.GetShader(shader).SetMatrix4("projection", win.camera.GetProjectionMatrix());
+            win.shaderManager.GetShader(shader).SetFloat("alpha", alpha);
 
             float[] fcolor = color.Normalized();
             win.shaderManager.GetShader(shader).SetVector3("textColor", new Vector3(fcolor[0], fcolor[1], fcolor[2]));

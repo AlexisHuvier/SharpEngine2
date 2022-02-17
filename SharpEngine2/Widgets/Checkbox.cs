@@ -39,7 +39,7 @@ namespace SE2.Widgets
                             * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(rotation))
                             * Matrix4.CreateTranslation(new Vector3(position.x, position.y, position.z) + GetWindow().camera.Position);
 
-                Graphics.Renderers.RectRenderer.Render(GetWindow(), shaderName, Utils.Color.BLACK, whiteModel);
+                Graphics.Renderers.RectRenderer.Render(GetWindow(), shaderName, Utils.Color.BLACK, 1f, whiteModel);
             }
 
             Matrix4 blackBGModel = Matrix4.Identity
@@ -51,8 +51,8 @@ namespace SE2.Widgets
                         * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(rotation))
                         * Matrix4.CreateTranslation(new Vector3(position.x, position.y, position.z) + GetWindow().camera.Position);
 
-            Graphics.Renderers.RectRenderer.Render(GetWindow(), shaderName, Utils.Color.WHITE, bgModel);
-            Graphics.Renderers.RectRenderer.Render(GetWindow(), shaderName, Utils.Color.BLACK, blackBGModel);
+            Graphics.Renderers.RectRenderer.Render(GetWindow(), shaderName, Utils.Color.WHITE, 1f, bgModel);
+            Graphics.Renderers.RectRenderer.Render(GetWindow(), shaderName, Utils.Color.BLACK, 1f, blackBGModel);
         }
     }
 }

@@ -7,15 +7,17 @@ namespace SE2.Components
         public string texture;
         public bool displayed;
         public string shaderName;
+        public float opacity;
 
         public bool flipX;
         public bool flipY;
 
-        public SpriteComponent(string texture, string shaderName = "sprite", bool displayed = true): base()
+        public SpriteComponent(string texture, float opacity = 1f, string shaderName = "sprite", bool displayed = true): base()
         {
             this.texture = texture;
             this.shaderName = shaderName;
             this.displayed = displayed;
+            this.opacity = opacity;
         }
 
         public override void Load()
@@ -42,7 +44,7 @@ namespace SE2.Components
                         * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(tc.rotation))
                         * Matrix4.CreateTranslation(new Vector3(tc.position.x, tc.position.y, tc.position.z));
 
-                    Graphics.Renderers.SpriteRenderer.Render(GetWindow(), shaderName, texture, flipX, flipY, model);
+                    Graphics.Renderers.SpriteRenderer.Render(GetWindow(), shaderName, texture, flipX, flipY, opacity, model);
                 }
             }
         }

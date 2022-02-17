@@ -13,12 +13,13 @@ namespace SE2.Components
         public int timerFrameMS;
         public bool flipX;
         public bool flipY;
+        public float opacity;
 
         private int currentImage;
         internal string currentAnim;
         private float internalTimer;
 
-        public SpriteSheetComponent(string texture, Utils.Vec2 size, Dictionary<string, List<int>> animations, string currentAnim = "", int timerFrameMS = 250, string shaderName = "sprite", bool displayed = true) : base()
+        public SpriteSheetComponent(string texture, Utils.Vec2 size, Dictionary<string, List<int>> animations, string currentAnim = "", int timerFrameMS = 250, float opacity = 1f, string shaderName = "sprite", bool displayed = true) : base()
         {
             this.texture = texture;
             this.shaderName = shaderName;
@@ -27,6 +28,7 @@ namespace SE2.Components
             this.animations = animations;
             this.currentAnim = currentAnim;
             this.timerFrameMS = timerFrameMS;
+            this.opacity = opacity;
 
             currentImage = 0;
             internalTimer = timerFrameMS;
@@ -84,7 +86,7 @@ namespace SE2.Components
                         * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(tc.rotation))
                         * Matrix4.CreateTranslation(new Vector3(tc.position.x, tc.position.y, tc.position.z));
 
-                    Graphics.Renderers.SpriteSheetRenderer.Render(GetWindow(), shaderName, texture, animations[currentAnim][currentImage], spriteSize, flipX, flipY, model);
+                    Graphics.Renderers.SpriteSheetRenderer.Render(GetWindow(), shaderName, texture, animations[currentAnim][currentImage], spriteSize, flipX, flipY, opacity, model);
                 }
             }
         }

@@ -43,8 +43,8 @@ namespace SE2.Widgets
                         * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(rotation))
                         * Matrix4.CreateTranslation(new Vector3(position.x - scale.x / 2 + (scale.x * (value / 100) / 2), position.y, position.z) + GetWindow().camera.Position);
 
-            Graphics.Renderers.SpriteRenderer.Render(GetWindow(), shaderName, textures[0], false, false, bgModel);
-            Graphics.Renderers.SpriteRenderer.Render(GetWindow(), shaderName, textures[1], false, false, blackBGModel);
+            Graphics.Renderers.SpriteRenderer.Render(GetWindow(), shaderName, textures[0], false, false, 1f, bgModel);
+            Graphics.Renderers.SpriteRenderer.Render(GetWindow(), shaderName, textures[1], false, false, 1f, blackBGModel);
         }
     }
 }

@@ -112,7 +112,7 @@ namespace SE2.Graphics.Renderers
             win.shaderManager.GetShader(shader).SetInt("texture0", 0);
         }
 
-        public static void Render(Window win, string shader, string texture, bool flipX, bool flipY, Matrix4 model)
+        public static void Render(Window win, string shader, string texture, bool flipX, bool flipY, float alpha, Matrix4 model)
         {
             if(oldFlipX != flipX || oldFlipY != flipY)
                 UpdateVertices(flipX, flipY);
@@ -125,6 +125,7 @@ namespace SE2.Graphics.Renderers
             win.shaderManager.GetShader(shader).SetMatrix4("model", model);
             win.shaderManager.GetShader(shader).SetMatrix4("view", win.camera.GetViewMatrix());
             win.shaderManager.GetShader(shader).SetMatrix4("projection", win.camera.GetProjectionMatrix());
+            win.shaderManager.GetShader(shader).SetFloat("alpha", alpha);
 
             GL.DrawElements(PrimitiveType.Triangles, _indices.Length, DrawElementsType.UnsignedInt, 0);
         }

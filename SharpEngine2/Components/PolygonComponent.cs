@@ -8,13 +8,15 @@ namespace SE2.Components
         public bool displayed;
         public string shaderName;
         public Utils.Color color;
+        public float opacity;
 
-        public PolygonComponent(float[] vertices, Utils.Color color, string shaderName = "shape", bool displayed = true) : base()
+        public PolygonComponent(float[] vertices, Utils.Color color, float opacity = 1f, string shaderName = "shape", bool displayed = true) : base()
         {
             this.vertices = vertices;
             this.color = color;
             this.shaderName = shaderName;
             this.displayed = displayed;
+            this.opacity = opacity;
         }
 
         public override void Render()
@@ -33,7 +35,7 @@ namespace SE2.Components
                         * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(tc.rotation))
                         * Matrix4.CreateTranslation(new Vector3(tc.position.x, tc.position.y, tc.position.z));
 
-                    Graphics.Renderers.PolygonRenderer.Render(GetWindow(), shaderName, vertices, color, model);
+                    Graphics.Renderers.PolygonRenderer.Render(GetWindow(), shaderName, vertices, color, opacity, model);
                 }
             }
         }

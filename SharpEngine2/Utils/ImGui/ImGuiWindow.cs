@@ -225,6 +225,7 @@ namespace SE2.Utils
                             ImGui.DragFloat("Radius", ref ((CircleComponent)c).radius);
                             ImGui.DragInt("Number Segment", ref ((CircleComponent)c).numberSegment);
                             ImGui.InputText("Shader Name", ref ((CircleComponent)c).shaderName, 40);
+                            ImGui.DragFloat("Opacity", ref ((CircleComponent)c).opacity, 0.05f, 0f, 1f);
                             ImGui.Checkbox("Displayed", ref ((CircleComponent)c).displayed);
                             ImGui.Separator();
                         }
@@ -274,6 +275,7 @@ namespace SE2.Utils
                             ImGui.DragInt("Color Alpha", ref ((PolygonComponent)c).color.internalA, 1f, 0, 255);
                             ImGui.Separator();
                             ImGui.InputText("Shader Name", ref ((PolygonComponent)c).shaderName, 40);
+                            ImGui.DragFloat("Opacity", ref ((PolygonComponent)c).opacity, 0.05f, 0f, 1f);
                             ImGui.Checkbox("Displayed", ref ((PolygonComponent)c).displayed);
                             ImGui.Separator();
                         }
@@ -292,6 +294,7 @@ namespace SE2.Utils
                             ImGui.DragInt("Color Alpha", ref ((RectComponent)c).color.internalA, 1f, 0, 255);
                             ImGui.Separator();
                             ImGui.InputText("Shader Name", ref ((RectComponent)c).shaderName, 40);
+                            ImGui.DragFloat("Opacity", ref ((RectComponent)c).opacity, 0.05f, 0f, 1f);
                             ImGui.Checkbox("Displayed", ref ((RectComponent)c).displayed);
                             ImGui.Separator();
                         }
@@ -308,6 +311,7 @@ namespace SE2.Utils
                             ImGui.Checkbox("Flip X", ref ((SpriteAnimComponent)c).flipX);
                             ImGui.Checkbox("Flip Y", ref ((SpriteAnimComponent)c).flipY);
                             ImGui.Separator();
+                            ImGui.DragFloat("Opacity", ref ((SpriteAnimComponent)c).opacity, 0.05f, 0f, 1f);
                             ImGui.Checkbox("Displayed", ref ((SpriteAnimComponent)c).displayed);
                             ImGui.Separator();
                         }
@@ -322,6 +326,7 @@ namespace SE2.Utils
                             ImGui.Checkbox("Flip X", ref ((SpriteComponent)c).flipX);
                             ImGui.Checkbox("Flip Y", ref ((SpriteComponent)c).flipY);
                             ImGui.Separator();
+                            ImGui.DragFloat("Opacity", ref ((SpriteComponent)c).opacity, 0.05f, 0f, 1f);
                             ImGui.Checkbox("Displayed", ref ((SpriteComponent)c).displayed);
                             ImGui.Separator();
                         }
@@ -341,6 +346,7 @@ namespace SE2.Utils
                             ImGui.Checkbox("Flip X", ref ((SpriteSheetComponent)c).flipX);
                             ImGui.Checkbox("Flip Y", ref ((SpriteSheetComponent)c).flipY);
                             ImGui.Separator();
+                            ImGui.DragFloat("Opacity", ref ((SpriteSheetComponent)c).opacity, 0.05f, 0f, 1f);
                             ImGui.Checkbox("Displayed", ref ((SpriteSheetComponent)c).displayed);
                             ImGui.Separator();
                         }
@@ -358,6 +364,7 @@ namespace SE2.Utils
                             ImGui.DragInt("Color Blue", ref ((TextComponent)c).color.internalB, 1f, 0, 255);
                             ImGui.DragInt("Color Alpha", ref ((TextComponent)c).color.internalA, 1f, 0, 255);
                             ImGui.Separator();
+                            ImGui.DragFloat("Opacity", ref ((TextComponent)c).opacity, 0.05f, 0f, 1f);
                             ImGui.Checkbox("Displayed", ref ((TextComponent)c).displayed);
                             ImGui.Separator();
                         }
@@ -366,6 +373,7 @@ namespace SE2.Utils
                     {
                         if (ImGui.CollapsingHeader("TileMapComponent"))
                         {
+                            ImGui.DragFloat("Opacity", ref ((TileMapComponent)c).opacity, 0.05f, 0f, 1f);
                             ImGui.Checkbox("Displayed", ref ((TileMapComponent)c).displayed);
                             ImGui.Separator();
                         }

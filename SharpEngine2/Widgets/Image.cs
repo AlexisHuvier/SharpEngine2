@@ -39,7 +39,7 @@ namespace SE2.Widgets
                 * Matrix4.CreateScale(scale.x, scale.y, scale.z)
                 * Matrix4.CreateTranslation(new Vector3(position.x, position.y, position.z) + GetWindow().camera.Position);
 
-            Graphics.Renderers.SpriteRenderer.Render(GetWindow(), shaderName, texture, flipX, flipY, model);
+            Graphics.Renderers.SpriteRenderer.Render(GetWindow(), shaderName, texture, flipX, flipY, 1f, model);
         }
     }
 }

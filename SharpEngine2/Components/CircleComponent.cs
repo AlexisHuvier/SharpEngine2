@@ -7,16 +7,18 @@ namespace SE2.Components
         public bool displayed;
         public string shaderName;
         public Utils.Color color;
+        public float opacity;
         public float radius;
         public int numberSegment;
 
-        public CircleComponent(float radius, Utils.Color color, int numberSegment = 10, string shaderName = "shape", bool displayed = true) : base()
+        public CircleComponent(float radius, Utils.Color color, int numberSegment = 10, float opacity = 1f, string shaderName = "shape", bool displayed = true) : base()
         {
             this.radius = radius;
             this.color = color;
             this.shaderName = shaderName;
             this.displayed = displayed;
             this.numberSegment = numberSegment;
+            this.opacity = opacity;
         }
 
         public override void Render()
@@ -36,7 +38,7 @@ namespace SE2.Components
                         * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(tc.rotation))
                         * Matrix4.CreateTranslation(new Vector3(tc.position.x, tc.position.y, tc.position.z));
 
-                    Graphics.Renderers.CircleRenderer.Render(GetWindow(), shaderName, numberSegment, color, model);
+                    Graphics.Renderers.CircleRenderer.Render(GetWindow(), shaderName, numberSegment, color, opacity, model);
                 }
             }
         }

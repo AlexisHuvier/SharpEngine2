@@ -31,7 +31,7 @@ namespace SE2.Widgets
                 * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(rotation))
                 * Matrix4.CreateTranslation(new Vector3(position.x, position.y, position.z) + GetWindow().camera.Position);
 
-            Graphics.Renderers.TextRenderer.Render(GetWindow(), text, shaderName, font, scale, position, color, model);
+            Graphics.Renderers.TextRenderer.Render(GetWindow(), text, shaderName, font, scale, position, color, 1f, model);
         }
     }
 }

@@ -86,15 +86,15 @@ namespace SE2.Widgets
                         * Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(rotation))
                         * Matrix4.CreateTranslation(new Vector3(position.x, position.y, position.z) + GetWindow().camera.Position);
 
-            Graphics.Renderers.TextRenderer.Render(GetWindow(), text, textShaderName, font, new Utils.Vec3(1), position, fontColor, fontModel);
+            Graphics.Renderers.TextRenderer.Render(GetWindow(), text, textShaderName, font, new Utils.Vec3(1), position, fontColor, 1f, fontModel);
 
             if (state == ButtonState.CLICK || !active)
-                Graphics.Renderers.SpriteRenderer.Render(GetWindow(), buttonShaderName, textures[2], false, false, model);
+                Graphics.Renderers.SpriteRenderer.Render(GetWindow(), buttonShaderName, textures[2], false, false, 1f, model);
 
-            Graphics.Renderers.SpriteRenderer.Render(GetWindow(), buttonShaderName, textures[0], false, false, model);
+            Graphics.Renderers.SpriteRenderer.Render(GetWindow(), buttonShaderName, textures[0], false, false, 1f, model);
 
             if (state == ButtonState.HOVERED && active)
-                Graphics.Renderers.SpriteRenderer.Render(GetWindow(), buttonShaderName, textures[1], false, false, model);
+                Graphics.Renderers.SpriteRenderer.Render(GetWindow(), buttonShaderName, textures[1], false, false, 1f, model);
         }
     }
 }
