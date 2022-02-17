@@ -5,7 +5,7 @@ namespace SE2
 {
     public class DebugInfo
     {
-        public static Version SE2_VERSION = new Version(1, 0, 1);
+        public static Version SE2_VERSION = new Version(1, 1, 0);
         public static Version GL_VERSION = null;
         public static Version GLSL_VERSION = null;
         public static string RENDERER_NAME = null;

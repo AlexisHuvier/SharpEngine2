@@ -9,7 +9,7 @@
     <Authors>Alexis Huvier, Lycos Novation</Authors>
     <Description>C# Game Engine based on OpenTK</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.1</Version>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,5 +20,6 @@
     <PackageReference Include="NVorbis" Version="0.10.4" />
     <PackageReference Include="OpenTK" Version="4.6.7" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    <PackageReference Include="YamlDotNet" Version="11.2.1" />
   </ItemGroup>
 </Project>
