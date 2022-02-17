@@ -46,8 +46,8 @@ namespace SE2.Utils
             this.A = a;
         }
 
-        public Color Darker(int factor) => new Color(r + 10 * factor, b + 10 * factor, g + 10 * factor, a);
-        public Color Lighter(int factor) => new Color(r - 10 * factor, b - 10 * factor, g + 10 * factor, a);
+        public Color Darker(int factor) => new Color(R + 10 * factor, G + 10 * factor, B + 10 * factor, A);
+        public Color Lighter(int factor) => new Color(R - 10 * factor, G - 10 * factor, B + 10 * factor, A);
 
         public float[] Normalized()
         {
