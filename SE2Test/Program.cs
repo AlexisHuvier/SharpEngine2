@@ -4,7 +4,7 @@ namespace SE2Test
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main(string[] _)
         {
             Window win = new Window(1200, 900, "SharpEngine 2 INCOMING !", true, true);
 

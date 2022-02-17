@@ -9,7 +9,7 @@ namespace SE2Test
 { 
     class MyWorld: Scene
     {
-        Entity e2;
+        readonly Entity e2;
 
         public MyWorld() : base()
         {
@@ -20,10 +20,7 @@ namespace SE2Test
 
             e2 = new Entity();
             e2.AddComponent(new TransformComponent(new Vec3(700, 400), new Vec3(1)));
-            e2.AddComponent(new SpriteAnimComponent(new Dictionary<string, List<string>>()
-            {
-                { "basic", new List<string>() { "container", "awesomeface" } }
-            }, "basic"));
+            e2.AddComponent(new SpriteComponent("container"));
             e2.AddComponent(new ControlComponent());
             AddEntity(e2);
         }
