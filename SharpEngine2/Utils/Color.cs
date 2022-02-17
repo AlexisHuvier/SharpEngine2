@@ -9,22 +9,22 @@ namespace SE2.Utils
         internal int internalB;
         internal int internalA;
 
-        public int r
+        public int R
         {
             get => internalR;
             set => internalR = Math.Clamp(value, 0, 255);
         }
-        public int g
+        public int G
         {
             get => internalG;
             set => internalG = Math.Clamp(value, 0, 255);
         }
-        public int b
+        public int B
         {
             get => internalB;
             set => internalB = Math.Clamp(value, 0, 255);
         }
-        public int a
+        public int A
         {
             get => internalA;
             set => internalA = Math.Clamp(value, 0, 255);
@@ -32,18 +32,18 @@ namespace SE2.Utils
 
         public Color(int r, int g, int b)
         {
-            this.r = r;
-            this.g = g;
-            this.b = b;
-            this.a = 255;
+            this.R = r;
+            this.G = g;
+            this.B = b;
+            this.A = 255;
         }
 
         public Color(int r, int g, int b, int a)
         {
-            this.r = r;
-            this.g = g;
-            this.b = b;
-            this.a = a;
+            this.R = r;
+            this.G = g;
+            this.B = b;
+            this.A = a;
         }
 
         public Color Darker(int factor) => new Color(r + 10 * factor, b + 10 * factor, g + 10 * factor, a);
@@ -56,7 +56,7 @@ namespace SE2.Utils
 
         public override string ToString()
         {
-            return $"Color(r={r}, g={g}, b={b}, a={a}";
+            return $"Color(r={R}, g={G}, b={B}, a={A}";
         }
 
         public static readonly Color MEDIUM_AQUAMARINE = new Color(102, 205, 170, 255);

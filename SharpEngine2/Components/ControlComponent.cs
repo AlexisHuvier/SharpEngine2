@@ -7,10 +7,10 @@ namespace SE2.Components
         public Utils.ControlType controlType;
         public int speed;
         public int jumpForce;
-        private Dictionary<Utils.ControlKey, Utils.Inputs.Key> keys;
-        private Dictionary<Utils.ControlAxis, int> axis;
-        private Dictionary<Utils.ControlKey, int> buttons;
-        private Dictionary<Utils.ControlKey, KeyValuePair<int, Utils.Inputs.HatState>> hats;
+        private readonly Dictionary<Utils.ControlKey, Utils.Inputs.Key> keys;
+        private readonly Dictionary<Utils.ControlAxis, int> axis;
+        private readonly Dictionary<Utils.ControlKey, int> buttons;
+        private readonly Dictionary<Utils.ControlKey, KeyValuePair<int, Utils.Inputs.HatState>> hats;
         public int activeJoystick;
 
         public ControlComponent(Utils.ControlType type = Utils.ControlType.FOURDIRECTION, int spd = 100, int jmpForce = 100)

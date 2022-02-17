@@ -1,6 +1,4 @@
-﻿using OpenTK.Graphics.OpenGL4;
-using OpenTK.Mathematics;
-using System.Collections.Generic;
+﻿using OpenTK.Mathematics;
 
 namespace SE2.Components
 {

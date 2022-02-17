@@ -24,7 +24,7 @@ namespace SE2.Utils
         private Texture _fontTexture;
 
         private Vec2 _windowSize;
-        private Vec2 _scale = new Vec2(1);
+        private readonly Vec2 _scale = new Vec2(1);
 
         readonly List<char> PressedChars = new List<char>();
 
@@ -86,7 +86,7 @@ namespace SE2.Utils
         public void RecreateFontDeviceTexture()
         {
             ImGuiIOPtr io = ImGui.GetIO();
-            io.Fonts.GetTexDataAsRGBA32(out IntPtr pixels, out int width, out int height, out int bytesPerPixel);
+            io.Fonts.GetTexDataAsRGBA32(out IntPtr pixels, out int width, out int height, out int _);
 
             _fontTexture = Texture.LoadFromPixels(width, height, pixels);
             GL.TextureParameter(_fontTexture.Handle, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);

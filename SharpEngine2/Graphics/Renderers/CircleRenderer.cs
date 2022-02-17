@@ -7,7 +7,7 @@ namespace SE2.Graphics.Renderers
 {
     class CircleRenderer
     {
-        private static List<float> _vertices = new List<float>()
+        private readonly static List<float> _vertices = new List<float>()
         {
             // Position   Color
              1f,  1f, 0f, 0f, 0f, 0f, 0f, // top right

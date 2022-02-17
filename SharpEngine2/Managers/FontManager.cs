@@ -8,7 +8,7 @@ namespace SE2.Managers
     {
         internal static FreeTypeLibrary lib = new FreeTypeLibrary();
 
-        private Dictionary<string, Graphics.Font> fonts;
+        private readonly Dictionary<string, Graphics.Font> fonts;
 
         public FontManager()
         {

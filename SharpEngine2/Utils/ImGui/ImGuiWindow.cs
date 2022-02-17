@@ -120,7 +120,7 @@ namespace SE2.Utils
             ApplyVariables(win);
         }
 
-        internal static void RenderConsole(Window win)
+        internal static void RenderConsole(Window _)
         {
             ImGui.Begin("Logs", ref _showConsole);
             foreach (string s in ImGuiTraceListener.logs)

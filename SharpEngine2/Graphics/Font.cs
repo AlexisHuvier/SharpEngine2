@@ -16,7 +16,7 @@ namespace SE2.Graphics
             public int Advance;    // Offset to advance to next glyph
         };
 
-        Dictionary<char, Character> Characters;
+        readonly Dictionary<char, Character> Characters;
 
         internal FreeTypeFaceFacade face;
         

@@ -84,12 +84,12 @@ namespace SE2.Utils
 
         private ALFormat GetSoundFormat(int channels, int bits)
         {
-            switch (channels)
+            return channels switch
             {
-                case 1: return bits == 8 ? ALFormat.Mono8 : (bits == 16 ? ALFormat.Mono16 : ALFormat.MonoFloat32Ext);
-                case 2: return bits == 8 ? ALFormat.Stereo8 : (bits == 16 ? ALFormat.Stereo16 : ALFormat.StereoFloat32Ext);
-                default: throw new NotSupportedException("The specified sound format is not supported.");
-            }
+                1 => bits == 8 ? ALFormat.Mono8 : (bits == 16 ? ALFormat.Mono16 : ALFormat.MonoFloat32Ext),
+                2 => bits == 8 ? ALFormat.Stereo8 : (bits == 16 ? ALFormat.Stereo16 : ALFormat.StereoFloat32Ext),
+                _ => throw new NotSupportedException("The specified sound format is not supported."),
+            };
         }
 
         internal static Sound<short> LoadOGG(string file)
@@ -145,40 +145,38 @@ namespace SE2.Utils
         {
             Stream stream = File.Open(file, FileMode.Open);
 
-            using (BinaryReader reader = new BinaryReader(stream))
-            {
-                // RIFF header
-                string signature = new string(reader.ReadChars(4));
-                if (signature != "RIFF")
-                    throw new NotSupportedException($"Specified stream is not a wave file. Signature : {signature}");
+            using BinaryReader reader = new BinaryReader(stream);
+            // RIFF header
+            string signature = new string(reader.ReadChars(4));
+            if (signature != "RIFF")
+                throw new NotSupportedException($"Specified stream is not a wave file. Signature : {signature}");
 
-                int riff_chunck_size = reader.ReadInt32();
+            int riff_chunck_size = reader.ReadInt32();
 
-                string format = new string(reader.ReadChars(4));
-                if (format != "WAVE")
-                    throw new NotSupportedException($"Specified stream is not a wave file. Format : {format}");
+            string format = new string(reader.ReadChars(4));
+            if (format != "WAVE")
+                throw new NotSupportedException($"Specified stream is not a wave file. Format : {format}");
 
-                // WAVE header
-                string format_signature = new string(reader.ReadChars(4));
-                if (format_signature != "fmt ")
-                    throw new NotSupportedException($"Specified wave file is not supported. Format Signature : {format_signature}");
+            // WAVE header
+            string format_signature = new string(reader.ReadChars(4));
+            if (format_signature != "fmt ")
+                throw new NotSupportedException($"Specified wave file is not supported. Format Signature : {format_signature}");
 
-                int format_chunk_size = reader.ReadInt32();
-                int audio_format = reader.ReadInt16();
-                int num_channels = reader.ReadInt16();
-                int sample_rate = reader.ReadInt32();
-                int byte_rate = reader.ReadInt32();
-                int block_align = reader.ReadInt16();
-                int bits_per_sample = reader.ReadInt16();
+            int format_chunk_size = reader.ReadInt32();
+            int audio_format = reader.ReadInt16();
+            int num_channels = reader.ReadInt16();
+            int sample_rate = reader.ReadInt32();
+            int byte_rate = reader.ReadInt32();
+            int block_align = reader.ReadInt16();
+            int bits_per_sample = reader.ReadInt16();
 
-                string data_signature = new string(reader.ReadChars(4));
-                if (data_signature != "data")
-                    throw new NotSupportedException($"Specified wave file is not supported. Data Signature : {data_signature}");
+            string data_signature = new string(reader.ReadChars(4));
+            if (data_signature != "data")
+                throw new NotSupportedException($"Specified wave file is not supported. Data Signature : {data_signature}");
 
-                int data_chunk_size = reader.ReadInt32();
+            int data_chunk_size = reader.ReadInt32();
 
-                return new Sound<byte>(reader.ReadBytes((int)reader.BaseStream.Length), num_channels, bits_per_sample, sample_rate);
-            }
+            return new Sound<byte>(reader.ReadBytes((int)reader.BaseStream.Length), num_channels, bits_per_sample, sample_rate);
         }
     }
 }

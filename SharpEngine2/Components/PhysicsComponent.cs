@@ -9,8 +9,8 @@ namespace SE2.Components
     {
         public Body body;
 
-        private string type;
-        private List<object> parameters;
+        private readonly string type;
+        private readonly List<object> parameters;
 
         public PhysicsComponent(Utils.Vec2 size, float density = 1f, float restitution = 0.5f, float friction = 0.5f, BodyType bodyType = BodyType.Dynamic)
         {

@@ -7,7 +7,7 @@ namespace SE2.Managers
 {
     public class InputManager
     {
-        private Window window;
+        private readonly Window window;
 
         public InputManager(Window win)
         {
@@ -53,16 +53,13 @@ namespace SE2.Managers
 
         internal MouseButton GetMouseButton(Utils.Inputs.MouseButton mouseButton)
         {
-            switch(mouseButton)
+            return mouseButton switch
             {
-                case Utils.Inputs.MouseButton.LEFT:
-                    return MouseButton.Left;
-                case Utils.Inputs.MouseButton.MIDDLE:
-                    return MouseButton.Middle;
-                case Utils.Inputs.MouseButton.RIGHT:
-                    return MouseButton.Right;
-            }
-            return MouseButton.Left;
+                Utils.Inputs.MouseButton.LEFT => MouseButton.Left,
+                Utils.Inputs.MouseButton.MIDDLE => MouseButton.Middle,
+                Utils.Inputs.MouseButton.RIGHT => MouseButton.Right,
+                _ => MouseButton.Left,
+            };
         }
     }
 }
